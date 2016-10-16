@@ -39,3 +39,4 @@ Open audio and podcast analytics specification. A unified spec for providing a c
   - `POST` requires that the `body` of the request is `JSON`. `POST` is generally used for `BATCH` events to overcome limitations on maximum URL length.
   - When sending `BATCH` events send them as an array of JSON objects that is then `base64` encoded.
 
+The specification described on this page or document is available under the [Open Web Foundation Agreement, Version 0.9](http://www.openwebfoundation.org/legal/the-0-9-agreements---necessary-claims).
