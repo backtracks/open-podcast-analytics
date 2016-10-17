@@ -77,7 +77,7 @@ Second level properties are children of the property `props`. Custom properties 
 | type | string | Yes | Type of media id, see `Known Media Id Types` below for known values. This is an open-ended property and not an restricted [`enum`](https://en.wikipedia.org/wiki/Enumerated_type) so the type value may be any valid string.  |
 
 
-### Known Media Id Type Values
+### Known Media Id Types
 | Type Name | Description |
 | ------------- | ------------- |
 | barcode | Unique, generally commercially registered, idenitider where the value can be a `upc`, `ean`, etc. (UPC and EAN are really just both versions of the same underlying barcode structure) |
@@ -161,10 +161,15 @@ Samples events in their unencoded format will be linked here.
 - *How can I add custom properties to events?*
   - Add any custom properties as descendants of the `props` property. The use of descendants and not children is to indicate that nested structures can be supported.
 - *Why is the data sent via the protocol [`Base 64`](https://en.wikipedia.org/wiki/Base64) encoded?*
-  - While it may seem that `JSON` is primarily a string based data interchange format, the payload of data (which is essentially a structured string) to converted to bytes (e.g. an array of bytes) then `base64` encoded with multiple purposes in mind.
+  - While it may seem that `JSON` is primarily a string based data interchange format, the payload of data (which is essentially a structured string) is converted to bytes (e.g. an array of bytes) then `base64` encoded with multiple purposes in mind.
     - All strings regardless of text encoding can be converted to byte arrays and all bytes can be encoded as `base64`
+    - [`UTF-8`](https://en.wikipedia.org/wiki/UTF-8) strings, such as 音频, can be encoded in `base64` if converted to bytes first, which opens up the protocol for use with values from different languages.
     - Encoding potential querystring parameter values as `base64` eliminates the need to also [`url encode`](https://en.wikipedia.org/wiki/Percent-encoding) or escape the value(s)
     - A light amount of obfuscation of the data
+- *What is a potential format example for the HTTP `Authorization` header?*
+  - Typically the header takes the format of `Authorization: <type> <credential(s) or token>` where type is often `Bearer` for systems like [`OAuth`](https://en.wikipedia.org/wiki/OAuth). An example is `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`.
+- *Is the HTTP `Authorization` header utilized and if so, how is it used in the protocol?*
+  - Most implementing analytics providers will either use the `Authorization` header to authorize that the caller/client/application has access to send events to the service, they will use the `token` property to route data for caller/client/application, they will utilize both properties (where the `Authorization` header is for authentication and/or authorization and the `token` is for additional routing data), or they will not use either property.
 - *Is there a recommended querystring parameter to use for data in a `GET` request?*
   - Yes, it is recommended to use `d` as the querystring parameter.
 - *How do I send multiple events in one request?*
