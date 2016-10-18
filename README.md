@@ -100,15 +100,6 @@ The simple protocol defines a common data interchange format and behaviors to al
 ]
 ```
 
-// A "real world" version of the "media.subscribe" event. Systems like
-// Backtracks accept events like this.
-// Subscriptions can be at the "series" level or "season" level for
-// a podcast. Subscribers may also indicate if they wish to subscribe
-// to only new and/or revised (e.g. re-edits with minor changes to
-// content) epsiodes of a podcast.
-
-
-
 ## Design Considerations
 
 The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies and standards. Some of the efficiency comes from aggregate network traffic at scale and limited code footprint.
