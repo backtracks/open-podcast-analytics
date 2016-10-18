@@ -23,7 +23,7 @@ The simple protocol defines a common data interchange format and behaviors to al
          "paused":false,
          "currentTime":2.997729
       },
-      "timestamp":"2016-10-16T00:23:13.411Z"
+      "time":"2016-10-16T00:23:13.411Z"
    },
 ]
 ```
@@ -45,8 +45,8 @@ Casing of property names is also something that was taken into account. Properti
 | ------------- | ------------- | ------------- | ------------- |
 | name | string(255) | Yes | Name of the event and generally takes the form of `major_topic.sub_topic` |
 | nonce | string(255) | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
-| properties | object | Yes | A `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, doubles/decimals/floats) or other nested `JSON` objects |
-| timestamp | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
+| props | object | Yes | A `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, doubles/decimals/floats) or other nested `JSON` objects |
+| time | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
 | token | string(255) | No | An `access key`, `public API key`, `project key`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
 
 ## Second Level Properties
@@ -92,7 +92,7 @@ Second level properties are children of the property `props`. Custom properties 
 ### Event Submission Workflow Example
 1. Construct the `JSON` formatted data payload representing one or more events
 2. Convert the data payload to an array of bytes
-3. Convert the array of bytes to a [`Base 64`](https://en.wikipedia.org/wiki/Base64) encoded string
+3. Convert the array of bytes to a [`Base 64`](https://en.wikipedia.org/wiki/Base64) encoded string (with padding)
 4. Transmit the HTTP request as a `GET` or `POST` request
 5. Receive the HTTP response
 
@@ -105,8 +105,9 @@ If/when receiving a HTTP response, typical [`HTTP status codes`](https://en.wiki
 ## Example Event Submission
 Here is an example of what an event submission using the protocol represented in HTTP request headers.
 
+### Actual Request
 ```http
-GET /?d=ICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjkNCiAgICAgIH0sDQogICAgICAidGltZXN0YW1wIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS50aW1ldXBkYXRlIiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6My4xNTQ0MzQNCiAgICAgIH0sDQogICAgICAidGltZXN0YW1wIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0= HTTP/1.1
+GET /?d=YGBganNvbg0KICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiY3VzdG9tX3Byb3BlcnR5MSI6ICJBbnl0aGluZyB5b3Ugd2FudCIsIA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywgDQogICAgICB9LA0KICAgICAgInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoiDQogICAgfSwNCiAgICB7DQogICAgICAibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLA0KICAgICAgInByb3BzIjp7DQogICAgICAgICAiYXV0aG9yIjoiSm9uYXRoYW4gR2lsbCIsDQogICAgICAgICAidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwNCiAgICAgICAgICJwbGF5YmFja1JhdGUiOjEsDQogICAgICAgICAidm9sdW1lIjoxLA0KICAgICAgICAgIm5ldHdvcmtTdGF0ZSI6MSwNCiAgICAgICAgICJyZWFkeVN0YXRlIjo0LA0KICAgICAgICAgIm11dGVkIjpmYWxzZSwNCiAgICAgICAgICJsb29wIjpmYWxzZSwNCiAgICAgICAgICJwYXVzZWQiOmZhbHNlLA0KICAgICAgICAgImN1cnJlbnRUaW1lIjozLjE1NDQzNA0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0= HTTP/1.1
 Host: example.com
 Connection: keep-alive
 User-Agent: Mozilla/5.0 (NeXTStep 3.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
@@ -128,9 +129,11 @@ Accept-Language: en-US,en;q=0.8
          "muted":false,
          "loop":false,
          "paused":false,
-         "currentTime":2.997729
+         "currentTime":2.997729,
+         "custom_property1": "Anything you want",
+         "custom_property2": 33.33,
       },
-      "timestamp":"2016-10-16T00:23:13.411Z"
+      "time":"2016-10-16T00:23:13.411Z"
     },
     {
       "name":"media.timeupdate",
@@ -146,25 +149,28 @@ Accept-Language: en-US,en;q=0.8
          "paused":false,
          "currentTime":3.154434
       },
-      "timestamp":"2016-10-16T00:23:13.411Z"
+      "time":"2016-10-16T00:23:13.411Z"
     },
   ]
 ```
 
 ## Querystring Parameters
-The following querystring parameters shall be supported on both `GET` and `POST` requests. The `d` querystring parameter is ignored on `POST` requests since that content will be in the body of the request.
+The following querystring parameters shall be supported on both `GET` and `POST` requests. The `d` querystring parameter is ignored on `POST` requests since that content will be in the `body` of the request.
 
 | Parameter Name | Type | Required | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| d | string | On `GET` | `Base64` encoded version of the data payload |
+| d | string | `GET` Only | `Base64` encoded (with padding) version of the data payload |
 | callback | string | No | JavaScript function name to call on the return of the request's response. When utilized the `Content-Type` of the response will be `application/javascript`. |
 
 ### Examples
+#### Placeholders
 ```
 https://example.com/?d=<data>&callback=<callback>
 ```
+
+#### Subsituted
 ```
-https://example.com/?d=ICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjkNCiAgICAgIH0sDQogICAgICAidGltZXN0YW1wIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS50aW1ldXBkYXRlIiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6My4xNTQ0MzQNCiAgICAgIH0sDQogICAgICAidGltZXN0YW1wIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0=&callback=customJavaScriptFunction
+https://example.com/?d=YGBganNvbg0KICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiY3VzdG9tX3Byb3BlcnR5MSI6ICJBbnl0aGluZyB5b3Ugd2FudCIsIA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywgDQogICAgICB9LA0KICAgICAgInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoiDQogICAgfSwNCiAgICB7DQogICAgICAibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLA0KICAgICAgInByb3BzIjp7DQogICAgICAgICAiYXV0aG9yIjoiSm9uYXRoYW4gR2lsbCIsDQogICAgICAgICAidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwNCiAgICAgICAgICJwbGF5YmFja1JhdGUiOjEsDQogICAgICAgICAidm9sdW1lIjoxLA0KICAgICAgICAgIm5ldHdvcmtTdGF0ZSI6MSwNCiAgICAgICAgICJyZWFkeVN0YXRlIjo0LA0KICAgICAgICAgIm11dGVkIjpmYWxzZSwNCiAgICAgICAgICJsb29wIjpmYWxzZSwNCiAgICAgICAgICJwYXVzZWQiOmZhbHNlLA0KICAgICAgICAgImN1cnJlbnRUaW1lIjozLjE1NDQzNA0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0=&callback=customJavaScriptFunction
 ```
 
 ### Event Examples
@@ -182,6 +188,10 @@ Samples events in their unencoded format will be linked here.
     - [`UTF-8`](https://en.wikipedia.org/wiki/UTF-8) strings, such as 音频, can be encoded in `base64` if converted to bytes first, which opens up the protocol for use with values from different languages.
     - Encoding potential querystring parameter values as `base64` eliminates the need to also [`url encode`](https://en.wikipedia.org/wiki/Percent-encoding) or escape the value(s)
     - A light amount of obfuscation of the data
+- *How do I know `base64` encode data?*
+  - Most modern programming languages have built-in support for `base64` encoding and for languages and environments like `JavaScript/Node`, there are open source modules and libraries that can perform the `base64` encoding and decoding.
+- *How do I know if my `base64` encoded data is padded correctly?*
+  - The [`mod`](https://en.wikipedia.org/wiki/Modulo_operation) 4 of a base64 encoded string should be 0 and if the result is not 0 then there's some missing padding in the encoding algorithm. This may seem crazy, but often this just means your encoding algorithm just needs to add equal signs `=` at the end of the string until the `mod 4` of the encoded string equals 0.
 - *Is there a recommended querystring parameter to use for data in a `GET` request?*
   - Yes, it is recommended to use `d` as the querystring parameter due to brevity (`d` = `data`).
 - *How do I send multiple events in one request?*
@@ -202,7 +212,7 @@ Samples events in their unencoded format will be linked here.
          "paused":false,
          "currentTime":2.997729
       },
-      "timestamp":"2016-10-16T00:23:13.411Z"
+      "time":"2016-10-16T00:23:13.411Z"
     },
     {
       "name":"media.timeupdate",
@@ -218,10 +228,12 @@ Samples events in their unencoded format will be linked here.
          "paused":false,
          "currentTime":3.154434
       },
-      "timestamp":"2016-10-16T00:23:13.411Z"
+      "time":"2016-10-16T00:23:13.411Z"
     },
   ]
   ```
+- *What should the maximum length be of a custom `string` property?*
+ -  The maximum length for any string is 255 characters. While your requirements may be that the string is shorter (which it can be), the maximum length for data storage of that string in any implementing analytics system will be 255 characters.
 - *Should `GET` and `POST` requests both support receiving multiple events in one request?*
  -  Yes
 - *What should the `Content-Type` HTTP header be of `POST` requests in the protocol?*
