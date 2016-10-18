@@ -4,7 +4,7 @@ Open audio analytics protocol specification. A unified spec for providing a comm
 
 ## How does it work?
 
-The simple protocol defines a common data interchange format to allow a variety of mobile and desktop applications to emit/publish audio analytics related events over the internet. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
+The simple protocol defines a common data interchange format and behaviors to allow a variety of mobile and desktop applications to emit/publish audio analytics related events over the internet. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
 
 ## Example Data
 ```json
@@ -43,19 +43,19 @@ Casing of property names is also something that was taken into account. Properti
 ## Top Level Properties
 | Property Name | Type | Required | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| name | string | Yes | Name of the event and generally takes the form of `major_topic.sub_topic` |
-| nonce | string | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
+| name | string(255) | Yes | Name of the event and generally takes the form of `major_topic.sub_topic` |
+| nonce | string(255) | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
 | properties | object | Yes | A `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, doubles/decimals/floats) or other nested `JSON` objects |
 | timestamp | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
-| token | string | No | An `access key`, `public API key`, `project key`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
+| token | string(255) | No | An `access key`, `public API key`, `project key`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
 
 ## Second Level Properties
 Second level properties are children of the property `props`. Custom properties are allowed, however *all custom* properties shall be children or descendants of the `props` property similar to the known and expected properties. In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name.
 
 | Property Name | Type | Required | Description | Mirrors HTML5 |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| author | string | No | Name of the author or artist of the media/work | No |
-| client | string | No | Unique identifier or name of the client or media player performing the action related to the request | No |
+| author | string(255) | No | Name of the author or artist of the media/work | No |
+| client | string(255) | No | Unique identifier or name of the client or media player performing the action related to the request | No |
 | currentTime | number/double | Yes | Current time of the client/user in media playbace in seconds. | Yes |
 | loop | boolean | Yes | Indication of if the media is set to loop on the end of playback. | Yes |
 | media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition | No |
@@ -63,18 +63,18 @@ Second level properties are children of the property `props`. Custom properties 
 | networkState | integer/short | Yes | An integer in the set of 0-3 that indicates the current network state. | Yes |
 | paused | boolean | Yes | Indication of if the media is paused. | Yes |
 | playbackRate | number/double | Yes | A number like 1 or 1.5 that indicates the relative speed of playback of the media where 1 = normal speed and values above or below 1 indicate a speed/rate change. Zero (0) is not a valid value. | Yes |
-| publisher | string | No | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
+| publisher | string(255) | No | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
 | readyState | integer/short | Yes | An integer in the set of 0-4 that indicates the current media readiness state for playback. | Yes |
-| title | string | No | Title of the media/work | No |
-| user_id | string | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization and is not an IP address. | No |
+| title | string(255) | No | Title of the media/work | No |
+| user_id | string(255) | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization and is not an IP address. | No |
 | volume | number/double | Yes | A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media. Example: .75 = 75% volume | Yes |
 
 
 ### Media Id Type
 | Property Name | Type | Required | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| id | string | Yes | Unique id of the media |
-| type | string | Yes | Type of media id, see `Known Media Id Types` below for known values. This is an open-ended property and not an restricted [`enum`](https://en.wikipedia.org/wiki/Enumerated_type) so the type value may be any valid string.  |
+| id | string(255) | Yes | Unique id of the media |
+| type | string(255) | Yes | Type of media id, see `Known Media Id Types` below for known values. This is an open-ended property and not an restricted [`enum`](https://en.wikipedia.org/wiki/Enumerated_type) so the type value may be any valid string.  |
 
 
 ### Known Media Id Types
@@ -149,6 +149,22 @@ Accept-Language: en-US,en;q=0.8
       "timestamp":"2016-10-16T00:23:13.411Z"
     },
   ]
+```
+
+## Querystring Parameters
+The following querystring parameters shall be supported on both `GET` and `POST` requests. The `d` querystring parameter is ignored on `POST` requests since that content will be in the body of the request.
+
+| Parameter Name | Type | Required | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| d | string | On `GET` | `Base64` encoded version of the data payload |
+| callback | string | No | JavaScript function name to call on the return of the request's response. When utilized the `Content-Type` of the response will be `application/javascript`. |
+
+### Examples
+```
+https://example.com/?d=<data>&callback=<callback>
+```
+```
+https://example.com/?d=ICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjkNCiAgICAgIH0sDQogICAgICAidGltZXN0YW1wIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS50aW1ldXBkYXRlIiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6My4xNTQ0MzQNCiAgICAgIH0sDQogICAgICAidGltZXN0YW1wIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0=&callback=customJavaScriptFunction
 ```
 
 ### Event Examples
