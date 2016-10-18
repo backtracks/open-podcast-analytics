@@ -44,9 +44,9 @@ Casing of property names is also something that was taken into account. Properti
 | Property Name | Type | Required | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | name | string | Yes | Name of the event and generally takes the form of `major_topic.sub_topic` |
-| nonce | string | No | Optional top-level event property (a peer of `name`) that is a check value on uniqueness of an event. The value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). |
+| nonce | string | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
 | properties | object | Yes | A `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, doubles/decimals/floats) or other nested `JSON` objects |
-| timestamp | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, floats/decimals) or other nested `JSON` objects |
+| timestamp | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
 | token | string | No | An `access key`, `public API key`, `project key`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
 
 ## Second Level Properties
