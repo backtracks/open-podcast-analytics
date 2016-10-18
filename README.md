@@ -48,7 +48,7 @@ Casing of property names is also something that was taken into account. Properti
 | nonce | string(255) | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
 | props | object | Yes | A `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, doubles/decimals/floats) or other nested `JSON` objects |
 | time | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
-| token | string(255) | No | An `access key`, `public API key`, `project key`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
+| id | string(255) | No | An `access key`, `public API key`, `project key`, `id`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
 
 ## Second Level Properties
 Second level properties are children of the property `props`. Custom properties are allowed, however *all custom* properties shall be children or descendants of the `props` property similar to the known and expected properties. In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name.
