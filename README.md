@@ -26,7 +26,7 @@ The simple protocol defines a common data interchange format and behaviors to al
       "loop":false,
       "paused":false,
       "currentTime":0,
-      "duration":159.00,
+      "duration":3599.574513,
       "explicit":false,
       "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
       "src":"https://www.example.com/media/example.mp3",
