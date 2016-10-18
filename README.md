@@ -55,18 +55,18 @@ Second level properties are children of the property `props`. Custom properties 
 | Property Name | Type | Required | Description | Mirrors HTML5 |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | author | string | No | Name of the author or artist of the media/work | No |
-| client | string | No | Unique identifier or name of the client or media player performing the action related to the request |
+| client | string | No | Unique identifier or name of the client or media player performing the action related to the request | No |
 | currentTime | number/double | Yes | Current time of the client/user in media playbace in seconds. | Yes |
 | loop | boolean | Yes | Indication of if the media is set to loop on the end of playback. | Yes |
-| media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition | No
+| media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition | No |
 | muted | boolean | Yes | Indication of if the media is muted. For example the usual volume setting of the media may be at 1 (100%), however the client has the media muted. | Yes |
-| networkState | integer/short | Yes | An integer in the set of 0-3 that indicates the current network state. This property name and value mirrors HTML5 Media's property of the same name. | Yes |
+| networkState | integer/short | Yes | An integer in the set of 0-3 that indicates the current network state. | Yes |
 | paused | boolean | Yes | Indication of if the media is paused. | Yes |
 | playbackRate | number/double | Yes | A number like 1 or 1.5 that indicates the relative speed of playback of the media where 1 = normal speed and values above or below 1 indicate a speed/rate change. Zero (0) is not a valid value. | Yes |
 | publisher | string | No | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
 | readyState | integer/short | Yes | An integer in the set of 0-4 that indicates the current media readiness state for playback. | Yes |
 | title | string | No | Title of the media/work | No |
-| user_id | string | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization and is not an IP address |
+| user_id | string | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization and is not an IP address. | No |
 | volume | number/double | Yes | A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media. Example: .75 = 75% volume | Yes |
 
 
@@ -100,7 +100,7 @@ When sending a HTTP request, standard HTTP headers such as [`User-Agent`](https:
 
 When sending a HTTP `GET` request, populate the querystring parameter `d` with the `base64` encoded data. When sending a HTTP `POST ` request, populate the `body` of the request with the `base64` encoded data and set the `Content-Type` header of the HTTP request to ``application/x-www-form-urlencoded`.
 
-If/when receiving a HTTP response, typical [`HTTP status codes`](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) apply where a statuc code in the 200 range indicates success.
+If/when receiving a HTTP response, typical [`HTTP status codes`](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) apply where a static code in the 200 range indicates success and 400 and 500 series status codes indicate a failure.
 
 ## Example Event Submission
 Here is an example of what an event submission using the protocol represented in HTTP request headers.
