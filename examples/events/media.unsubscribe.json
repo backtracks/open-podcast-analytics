@@ -1,9 +1,9 @@
-// A "real world" version of the "media.download" event. This is an
-// extension of the OAA (Open Audio Analytics) "media.download" event
-// to provide prodcast specific information.
-// Systems like Backtracks accept events like this.
+// A "real world" version of the "media.unsubscribe" event. Systems like
+// Backtracks accept events like this.
+// Unsubscribing can be at the "series" level or "season" level for
+// a podcast, however logically it is usually at the "series" level.
 {
-   "name":"media.download",
+   "name":"media.unsubscribe",
    "props":{
       "client":"Example App",
       "client_version":"1.0.0",
@@ -53,20 +53,9 @@
          "usa"
       ],
       "series": {
-            "label": "Example Podcast",
-            "type": "series"
-      },
-      "season": {
-            "label": "Season 1",
-            "number": 1,
-            "type": "season"
-      },
-      "episode": {
-            "label": "Episode 25",
-            "number": 25,
-            "type": "episode"
+            "label":"Example Podcast",
+            "type":"series"
       }
    },
-   "id": "abc12345678910",
    "time":"2016-10-16T00:23:13.411Z"
  }

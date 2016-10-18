@@ -1,9 +1,11 @@
-// A "real world" version of the "media.download" event. This is an
-// extension of the OAA (Open Audio Analytics) "media.download" event
-// to provide prodcast specific information.
-// Systems like Backtracks accept events like this.
+// A "real world" version of the "media.subscribe" event. Systems like
+// Backtracks accept events like this.
+// Subscriptions can be at the "series" level or "season" level for
+// a podcast. Subscribers may also indicate if they wish to subscribe
+// to only new and/or revised (e.g. re-edits with minor changes to
+// content) epsiodes of a podcast.
 {
-   "name":"media.download",
+   "name":"media.subscribe",
    "props":{
       "client":"Example App",
       "client_version":"1.0.0",
@@ -53,20 +55,21 @@
          "usa"
       ],
       "series": {
-            "label": "Example Podcast",
-            "type": "series"
+            "label":"Example Podcast",
+            "type":"series"
       },
       "season": {
-            "label": "Season 1",
-            "number": 1,
-            "type": "season"
+            "label":"Season 1",
+            "number":1,
+            "type":"season"
       },
-      "episode": {
-            "label": "Episode 25",
-            "number": 25,
-            "type": "episode"
+      "subscription_settings": {
+         "auto_download":true,
+         "new":true,
+         "revised":true,
+         "limit_new":5,
+         "limit":5,
       }
    },
-   "id": "abc12345678910",
    "time":"2016-10-16T00:23:13.411Z"
  }

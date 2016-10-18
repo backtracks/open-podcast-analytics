@@ -1,37 +1,117 @@
-# Open Audio Analytics (OAA) Protocol
+# Open Podcast Analytics (OPA)
 
-Open audio analytics protocol specification. A unified spec for providing a common interface for sending audio analytics related events.
+The Open Podcast Analytics specification is a a unified spec for providing a common interface for sending podcast analytics related events. It is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps and clients like podcast discovery and listening software send data in the format in this specification.
 
 ## How does it work?
 
-The simple protocol defines a common data interchange format and behaviors to allow a variety of mobile and desktop applications to emit/publish audio analytics related events over the internet. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
+The simple protocol defines a common data interchange format and behaviors to allow a variety of mobile and desktop applications to emit/publish podcast analytics related events over the internet. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
 
 ## Example Data
 ```json
 [
-   {
+  {
+   "name":"media.download",
+   "props":{
+      "client":"Example App",
+      "client_version":"1.0.0",
+      "author":"Series Author or Series Title",
+      "title":"Episode Title",
+      "publisher": "Example Podcast Publisher",
+      "publisher_url": "http://example.com",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":0,
+      "duration":159.00,
+      "explicit":false,
+      "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+      "src":"https://www.example.com/media/example.mp3",
+      "media_ids": [
+         {
+            "id": "624fb990cdd94623b77f41fef0aa0e1d",
+            "type": "uuid",
+         },
+         {
+            "id": "Episode 123 of Example Podcast",
+            "type": "guid",
+         }
+      ],
+      "categories": [
+         {
+            "label":"Society &amp; Culture",
+            "label_encoded":true,
+            "categories": [
+               {
+                  "label":"History"
+               }
+            ]
+         },
+         {
+            "label":"Music"
+         },
+      ],
+      "tags": [
+         "hot",
+         "new",
+         "usa"
+      ],
+      "series": {
+            "label": "Example Podcast",
+            "type": "series"
+      },
+      "season": {
+            "label": "Season 1",
+            "number": 1,
+            "type": "season"
+      },
+      "episode": {
+            "label": "Episode 25",
+            "number": 25,
+            "type": "episode"
+      }
+   },
+    "time":"2016-10-16T00:23:13.411Z"
+  },
+  {
       "name":"media.play",
       "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "networkState":1,
-         "readyState":4,
-         "muted":false,
-         "loop":false,
-         "paused":false,
-         "currentTime":2.997729,
-         "duration":3599.574513
+        "client":"Example App",
+        "client_version":"1.0.0",
+        "author":"Series Author or Series Title",
+        "title":"Episode Title",
+        "publisher": "Example Podcast Publisher",
+        "publisher_url": "http://example.com",
+        "playbackRate":1,
+        "volume":1,
+        "networkState":1,
+        "readyState":4,
+        "muted":false,
+        "loop":false,
+        "paused":false,
+        "currentTime":0,
+        "duration":3599.574513
       },
       "time":"2016-10-16T00:23:13.411Z"
-   },
+   }
 ]
 ```
 
+// A "real world" version of the "media.subscribe" event. Systems like
+// Backtracks accept events like this.
+// Subscriptions can be at the "series" level or "season" level for
+// a podcast. Subscribers may also indicate if they wish to subscribe
+// to only new and/or revised (e.g. re-edits with minor changes to
+// content) epsiodes of a podcast.
+
+
+
 ## Design Considerations
 
-The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies. Some of the efficiency comes from aggregate network traffic at scale and limited code footprint.
+The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies and standards. Some of the efficiency comes from aggregate network traffic at scale and limited code footprint.
 
 At a large scale shortening terms like `properties` to `props` in the protocol results in less network data transfer as well as fewer characters in source code, logs, etc.
 
@@ -186,6 +266,8 @@ Samples events in their unencoded format are below:
 | [media.play](/examples/events/media.play.extended.json) (Actual/Detailed) |
 | [media.pause](/examples/events/media.pause.json) |
 | [media.download](/examples/events/media.download.json) |
+| [media.subscribe](/examples/events/media.subscribe.json) |
+| [media.unsubscribe](/examples/events/media.unsubscribe.json) |
 | [media.ended](/examples/events/media.ended.json) |
 | [media.ratechange](/examples/events/media.ratechange.json) |
 | [media.seeked](/examples/events/media.seeked.json) |
@@ -263,4 +345,4 @@ Samples events in their unencoded format are below:
   - Because `guid` aka Globally Unique Identifier does not quite fit for an interplanetary species.
 
 
-The specification described on this page or document is available under the Apache 2.0 License. This has been another Backtracks, Inc. & Friends joint.
+The specification described on this page or document is available under the Apache 2.0 License. This is a dervivative work of [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics). This has been another Backtracks, Inc. & Friends joint.

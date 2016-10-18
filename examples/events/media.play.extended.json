@@ -78,12 +78,24 @@
          },
       ],
       "tags": [
-         "music",
-         "instrumental",
-         "usa",
-         "trio",
-         "texas"
-      ]
+         "hot",
+         "new",
+         "usa"
+      ],
+      "series": {
+            "label": "Example Podcast",
+            "type": "series"
+      },
+      "season": {
+            "label": "Season 1",
+            "number": 1,
+            "type": "season"
+      },
+      "episode": {
+            "label": "Episode 25",
+            "number": 25,
+            "type": "episode"
+      }
    },
    "id": "abc12345678910",
    "time":"2016-10-16T00:23:13.411Z"
