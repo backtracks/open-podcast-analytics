@@ -1,0 +1,20 @@
+// Occurs when the playback speed or rate changes.
+{
+   "name":"media.ratechange",
+   "props":{
+      "client":"Example App",
+      "author":"The Mag Seven",
+      "title":"Trim",
+      "publisher":"End Sounds",
+      "playbackRate":0.50,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":5.997729,
+      "duration":159.00
+   },
+   "time":"2016-10-16T00:23:13.411Z"
+ }

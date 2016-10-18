@@ -1,0 +1,23 @@
+// Occurs when media "seeks"/"skips" to a
+// different location in the media based on
+// an action or command by the user of an
+// app or client.
+{
+   "name":"media.seeked",
+   "props":{
+      "client":"Example App",
+      "author":"The Mag Seven",
+      "title":"Trim",
+      "publisher":"End Sounds",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":2.997729,
+      "duration":159.00
+   },
+   "time":"2016-10-16T00:23:13.411Z"
+ }

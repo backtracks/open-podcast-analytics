@@ -21,7 +21,8 @@ The simple protocol defines a common data interchange format and behaviors to al
          "muted":false,
          "loop":false,
          "paused":false,
-         "currentTime":2.997729
+         "currentTime":2.997729,
+         "duration":3599.574513
       },
       "time":"2016-10-16T00:23:13.411Z"
    },
@@ -56,7 +57,8 @@ Second level properties are children of the property `props`. Custom properties 
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | author | string(255) | No | Name of the author or artist of the media/work | No |
 | client | string(255) | No | Unique identifier or name of the client or media player performing the action related to the request | No |
-| currentTime | number/double | Yes | Current time of the client/user in media playbace in seconds. | Yes |
+| currentTime | number/double | Yes | Current time of the client/user in media playback in seconds. | Yes |
+| duration | number/double | Yes | Length of in media in seconds. | Yes |
 | loop | boolean | Yes | Indication of if the media is set to loop on the end of playback. | Yes |
 | media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition | No |
 | muted | boolean | Yes | Indication of if the media is muted. For example the usual volume setting of the media may be at 1 (100%), however the client has the media muted. | Yes |
@@ -66,7 +68,7 @@ Second level properties are children of the property `props`. Custom properties 
 | publisher | string(255) | No | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
 | readyState | integer/short | Yes | An integer in the set of 0-4 that indicates the current media readiness state for playback. | Yes |
 | title | string(255) | No | Title of the media/work | No |
-| user_id | string(255) | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization and is not an IP address. | No |
+| user_id | string(255) | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization. | No |
 | volume | number/double | Yes | A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media. Example: .75 = 75% volume | Yes |
 
 
@@ -107,7 +109,7 @@ Here is an example of what an event submission using the protocol represented in
 
 ### Actual Request
 ```http
-GET /?d=YGBganNvbg0KICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiY3VzdG9tX3Byb3BlcnR5MSI6ICJBbnl0aGluZyB5b3Ugd2FudCIsIA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywgDQogICAgICB9LA0KICAgICAgInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoiDQogICAgfSwNCiAgICB7DQogICAgICAibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLA0KICAgICAgInByb3BzIjp7DQogICAgICAgICAiYXV0aG9yIjoiSm9uYXRoYW4gR2lsbCIsDQogICAgICAgICAidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwNCiAgICAgICAgICJwbGF5YmFja1JhdGUiOjEsDQogICAgICAgICAidm9sdW1lIjoxLA0KICAgICAgICAgIm5ldHdvcmtTdGF0ZSI6MSwNCiAgICAgICAgICJyZWFkeVN0YXRlIjo0LA0KICAgICAgICAgIm11dGVkIjpmYWxzZSwNCiAgICAgICAgICJsb29wIjpmYWxzZSwNCiAgICAgICAgICJwYXVzZWQiOmZhbHNlLA0KICAgICAgICAgImN1cnJlbnRUaW1lIjozLjE1NDQzNA0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0= HTTP/1.1
+GET /?d=ICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiZHVyYXRpb24iOjM1OTkuNTc0NTEzLA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTEiOiAiQW55dGhpbmcgeW91IHdhbnQiLA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywNCiAgICAgIH0sDQogICAgICAidGltZSI6IjIwMTYtMTAtMTZUMDA6MjM6MTMuNDExWiINCiAgICB9LA0KICAgIHsNCiAgICAgICJuYW1lIjoibWVkaWEudGltZXVwZGF0ZSIsDQogICAgICAicHJvcHMiOnsNCiAgICAgICAgICJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwNCiAgICAgICAgICJ0aXRsZSI6IkV4YW1wbGUgVGl0bGUiLA0KICAgICAgICAgInBsYXliYWNrUmF0ZSI6MSwNCiAgICAgICAgICJ2b2x1bWUiOjEsDQogICAgICAgICAibmV0d29ya1N0YXRlIjoxLA0KICAgICAgICAgInJlYWR5U3RhdGUiOjQsDQogICAgICAgICAibXV0ZWQiOmZhbHNlLA0KICAgICAgICAgImxvb3AiOmZhbHNlLA0KICAgICAgICAgInBhdXNlZCI6ZmFsc2UsDQogICAgICAgICAiY3VycmVudFRpbWUiOjMuMTU0NDM0LA0KICAgICAgICAgImR1cmF0aW9uIjozNTk5LjU3NDUxMw0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0= HTTP/1.1
 Host: example.com
 Connection: keep-alive
 User-Agent: Mozilla/5.0 (NeXTStep 3.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
@@ -130,8 +132,9 @@ Accept-Language: en-US,en;q=0.8
          "loop":false,
          "paused":false,
          "currentTime":2.997729,
+         "duration":3599.574513,
          "custom_property1": "Anything you want",
-         "custom_property2": 33.33,
+         "custom_property2": 33.33
       },
       "time":"2016-10-16T00:23:13.411Z"
     },
@@ -147,7 +150,8 @@ Accept-Language: en-US,en;q=0.8
          "muted":false,
          "loop":false,
          "paused":false,
-         "currentTime":3.154434
+         "currentTime":3.154434,
+         "duration":3599.574513
       },
       "time":"2016-10-16T00:23:13.411Z"
     },
@@ -170,11 +174,24 @@ https://example.com/?d=<data>&callback=<callback>
 
 #### Subsituted
 ```
-https://example.com/?d=YGBganNvbg0KICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiY3VzdG9tX3Byb3BlcnR5MSI6ICJBbnl0aGluZyB5b3Ugd2FudCIsIA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywgDQogICAgICB9LA0KICAgICAgInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoiDQogICAgfSwNCiAgICB7DQogICAgICAibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLA0KICAgICAgInByb3BzIjp7DQogICAgICAgICAiYXV0aG9yIjoiSm9uYXRoYW4gR2lsbCIsDQogICAgICAgICAidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwNCiAgICAgICAgICJwbGF5YmFja1JhdGUiOjEsDQogICAgICAgICAidm9sdW1lIjoxLA0KICAgICAgICAgIm5ldHdvcmtTdGF0ZSI6MSwNCiAgICAgICAgICJyZWFkeVN0YXRlIjo0LA0KICAgICAgICAgIm11dGVkIjpmYWxzZSwNCiAgICAgICAgICJsb29wIjpmYWxzZSwNCiAgICAgICAgICJwYXVzZWQiOmZhbHNlLA0KICAgICAgICAgImN1cnJlbnRUaW1lIjozLjE1NDQzNA0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0=&callback=customJavaScriptFunction
+https://example.com/?d=ICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiZHVyYXRpb24iOjM1OTkuNTc0NTEzLA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTEiOiAiQW55dGhpbmcgeW91IHdhbnQiLA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywNCiAgICAgIH0sDQogICAgICAidGltZSI6IjIwMTYtMTAtMTZUMDA6MjM6MTMuNDExWiINCiAgICB9LA0KICAgIHsNCiAgICAgICJuYW1lIjoibWVkaWEudGltZXVwZGF0ZSIsDQogICAgICAicHJvcHMiOnsNCiAgICAgICAgICJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwNCiAgICAgICAgICJ0aXRsZSI6IkV4YW1wbGUgVGl0bGUiLA0KICAgICAgICAgInBsYXliYWNrUmF0ZSI6MSwNCiAgICAgICAgICJ2b2x1bWUiOjEsDQogICAgICAgICAibmV0d29ya1N0YXRlIjoxLA0KICAgICAgICAgInJlYWR5U3RhdGUiOjQsDQogICAgICAgICAibXV0ZWQiOmZhbHNlLA0KICAgICAgICAgImxvb3AiOmZhbHNlLA0KICAgICAgICAgInBhdXNlZCI6ZmFsc2UsDQogICAgICAgICAiY3VycmVudFRpbWUiOjMuMTU0NDM0LA0KICAgICAgICAgImR1cmF0aW9uIjozNTk5LjU3NDUxMw0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0=&callback=customJavaScriptFunction
 ```
 
 ### Event Examples
-Samples events in their unencoded format will be linked here.
+Samples events in their unencoded format are below:
+
+| Event Name |
+| ------------- |
+| [media.play](/examples/events/media.play.json) (Basic/Sample) |
+| [media.play](/examples/events/media.play.extended.json) (Actual/Detailed) |
+| [media.pause](/examples/events/media.pause.json) |
+| [media.download](/examples/events/media.download.json) |
+| [media.ended](/examples/events/media.ended.json) |
+| [media.ratechange](/examples/events/media.ratechange.json) |
+| [media.seeked](/examples/events/media.seeked.json) |
+| [media.timeupdate](/examples/events/media.timeupdate.json) |
+| [media.volumechange](/examples/events/media.volumechange.json) |
+| [ui.action](/examples/events/ui.action.json) |
 
 
 ### Tips and FAQs
@@ -210,7 +227,8 @@ Samples events in their unencoded format will be linked here.
          "muted":false,
          "loop":false,
          "paused":false,
-         "currentTime":2.997729
+         "currentTime":2.997729,
+         "duration":3599.574513
       },
       "time":"2016-10-16T00:23:13.411Z"
     },
@@ -226,7 +244,8 @@ Samples events in their unencoded format will be linked here.
          "muted":false,
          "loop":false,
          "paused":false,
-         "currentTime":3.154434
+         "currentTime":3.154434,
+         "duration":3599.574513
       },
       "time":"2016-10-16T00:23:13.411Z"
     },

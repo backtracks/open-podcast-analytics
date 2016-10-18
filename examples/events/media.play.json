@@ -1,0 +1,21 @@
+// Simple "media.play" event. A more fully formed "media.play" event such as the
+// event example in "media.play.extended.json" is recommended for actual apps/clients.
+{
+   "name":"media.play",
+   "props":{
+      "client":"Example App",
+      "author":"The Mag Seven",
+      "title":"Trim",
+      "publisher":"End Sounds",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":2.997729,
+      "duration":159.00
+   },
+   "time":"2016-10-16T00:23:13.411Z"
+ }

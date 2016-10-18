@@ -1,0 +1,23 @@
+// Occurs when the volume changes. This event is not trigger
+// if the user simply mutes playback, but leaves the volume
+// setting that playback would fallback to if unmuted
+// unchanged.
+{
+   "name":"media.volumechange",
+   "props":{
+      "client":"Example App",
+      "author":"The Mag Seven",
+      "title":"Trim",
+      "publisher":"End Sounds",
+      "playbackRate":1,
+      "volume":0.75,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":5.997729,
+      "duration":159.00
+   },
+   "time":"2016-10-16T00:23:13.411Z"
+ }

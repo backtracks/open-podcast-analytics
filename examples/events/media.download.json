@@ -1,0 +1,65 @@
+// A "real world" version of the "media.download" event. Systems like
+// Backtracks accept events like this.
+{
+   "name":"media.download",
+   "props":{
+      "client":"Example App",
+      "client_version":"1.0.0",
+      "author":"The Mag Seven",
+      "title":"Trim",
+      "publisher": "End Sounds",
+      "publisher_url": "http://endsounds.com",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":2.997729,
+      "duration":159.00,
+      "explicit":false,
+      "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+      "src":"https://www.example.com/media/example.mp3",
+      "media_ids": [
+         {
+            "id": "859403001219",
+            "type": "barcode",
+         },
+         {
+            "id": "USAEA0910027",
+            "type": "isrc",
+         },
+         {
+            "id": "END1021",
+            "type": "org_uuid",
+         },
+         {
+            "id": "624fb990cdd94623b77f41fef0aa0e1d",
+            "type": "uuid",
+         }
+      ],
+      "categories": [
+         {
+            "label":"Society &amp; Culture",
+            "label_encoded":true,
+            "categories": [
+               {
+                  "label":"History"
+               }
+            ]
+         },
+         {
+            "label":"Music"
+         },
+      ],
+      "tags": [
+         "music",
+         "instrumental",
+         "usa",
+         "trio",
+         "texas"
+      ]
+   },
+   "time":"2016-10-16T00:23:13.411Z"
+ }
