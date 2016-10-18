@@ -166,12 +166,8 @@ Samples events in their unencoded format will be linked here.
     - [`UTF-8`](https://en.wikipedia.org/wiki/UTF-8) strings, such as 音频, can be encoded in `base64` if converted to bytes first, which opens up the protocol for use with values from different languages.
     - Encoding potential querystring parameter values as `base64` eliminates the need to also [`url encode`](https://en.wikipedia.org/wiki/Percent-encoding) or escape the value(s)
     - A light amount of obfuscation of the data
-- *What is a potential format example for the HTTP `Authorization` header?*
-  - Typically the header takes the format of `Authorization: <type> <credential(s) or token>` where type is often `Bearer` for systems like [`OAuth`](https://en.wikipedia.org/wiki/OAuth). An example is `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`.
-- *Is the HTTP `Authorization` header utilized and if so, how is it used in the protocol?*
-  - Most implementing analytics providers will either use the `Authorization` header to authorize that the caller/client/application has access to send events to the service, they will use the `token` property to route data for caller/client/application, they will utilize both properties (where the `Authorization` header is for authentication and/or authorization and the `token` is for additional routing data), or they will not use either property.
 - *Is there a recommended querystring parameter to use for data in a `GET` request?*
-  - Yes, it is recommended to use `d` as the querystring parameter.
+  - Yes, it is recommended to use `d` as the querystring parameter due to brevity (`d` = `data`).
 - *How do I send multiple events in one request?*
   - Multiple events should be represented as a `JSON` array where each event is a `JSON` object. Here is an unencoded representation of the data before it is `base64` encoded:
   ```json
@@ -215,7 +211,7 @@ Samples events in their unencoded format will be linked here.
 - *What should the `Content-Type` HTTP header be of `POST` requests in the protocol?*
   - The `Content-Type` of a `POST` request shall be `application/x-www-form-urlencoded`.
 - *Is whitespace important?*
-  - We recommend that `JSON` not have whitespace outside of the whitespace within a string value in production usage.
+  - We recommend that `JSON` not have whitespace outside of the whitespace within a string value in production usage. Whitespace outside of this use is not significant in this protocol and simply increases the data payload size.
 - *Why do you use the term `uuid` instead of `guid`?*
   - Because `guid` aka Globally Unique Identifier does not quite fit for an interplanetary species.
 
