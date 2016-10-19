@@ -1,0 +1,17 @@
+// A "station" type contains information about
+// a radio station (or equivalent) that triggered
+// the media action. This structure can represent
+// terrestrial, satellite, internet radio, dynamically
+// constructred "stations", etc. and may contain many
+// more properties. All properties are optional.
+{
+  "call_name": "KROX",
+  "frequency": "101.5",
+  "band": "fm",
+  "type": "terrestrial",
+  "show": "Morning X with Jason and Deb",
+  "geo": {
+    "lat": 30.3544,
+    "long": -97.7344,
+  }
+}

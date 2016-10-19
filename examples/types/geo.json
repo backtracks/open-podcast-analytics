@@ -1,0 +1,17 @@
+// Geo  includes geographic information
+// "orb" is a bit of a joke becuse latitude
+// and longitude are Earth based measures.
+// We recommend not populating geo information
+// for an overall request as an app/client and
+// allowing analytics providers to add this
+// information (saving you processing time,
+// lookups, and potentially associated costs).
+{
+    "lat":30.3544,
+    "long":-97.7344,
+    "postal_code":"78768",
+    "city":"austin",
+    "region_code":"tx",
+    "country_code":"us",
+    "orb": "earth"
+}

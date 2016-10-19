@@ -1,0 +1,12 @@
+// A "user" type adds more information about
+// a user and may contain a variety of custom
+// properties.
+{
+  "first_name": "Jane",
+  "last_name_or_surname": "Doe",
+  "name": "Jane Doe",
+  "dob": "1964-10-06",
+  "age": 52,
+  "gender": "m",
+  "email": "jane.doe@example.com"
+}

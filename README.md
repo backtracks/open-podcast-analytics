@@ -130,6 +130,7 @@ Second level properties are children of the property `props`. Custom properties 
 | client | string(255) | No | Unique identifier or name of the client or media player performing the action related to the request | No |
 | currentTime | number/double | Yes | Current time of the client/user in media playback in seconds. | Yes |
 | duration | number/double | Yes | Length of in media in seconds. | Yes |
+| explicit | boolean | No | If true, the media contains explicit content. | Yes |
 | loop | boolean | Yes | Indication of if the media is set to loop on the end of playback. | Yes |
 | media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition | No |
 | muted | boolean | Yes | Indication of if the media is muted. For example the usual volume setting of the media may be at 1 (100%), however the client has the media muted. | Yes |
