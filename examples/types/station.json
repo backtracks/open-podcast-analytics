@@ -3,15 +3,40 @@
 // the media action. This structure can represent
 // terrestrial, satellite, internet radio, dynamically
 // constructred "stations", etc. and may contain many
-// more properties. All properties are optional.
+// more properties.
+// Dynamic radio stations are typically those with a
+// degree of personalization/personalisation.
+// All properties are optional.
+// If "type" is specified then the known values (there
+// may be others) are:
+//    dynamic
+//    internet
+//    terrestrial
+//    satellite
+
 {
-  "call_name": "KROX",
+  "call_sign": "KROX",
+  "name": "101X",
   "frequency": "101.5",
   "band": "fm",
   "type": "terrestrial",
   "show": "Morning X with Jason and Deb",
   "geo": {
-    "lat": 30.3544,
-    "long": -97.7344,
+    "city": "austin",
+    "region_code": "tx"
   }
+}
+
+// Here in an example of a dynamically constructed
+// internet radio station
+{
+  "name": "Riverboat Gamblers Radio",
+  "description": "Radio station based on music similar to Riverboat Gamblers",
+  "recipie": [
+    {
+      "artist": "Riverboat Gamblers",
+      "proportion": 1,
+    }
+  ],
+  "type": "dynamic"
 }
