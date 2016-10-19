@@ -1,6 +1,6 @@
 # Open Podcast Analytics (OPA)
 
-The Open Podcast Analytics specification is a a unified spec for providing a common interface for sending podcast analytics related events. It is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps and clients like podcast discovery and listening software send data in the format in this specification.
+The Open Podcast Analytics specification is a a unified spec for providing an open and common interface for sending podcast analytics related events. It is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps and clients like podcast discovery and listening software send data in the format in this specification.
 
 ## How does it work?
 
@@ -102,13 +102,13 @@ The simple protocol defines a common data interchange format and behaviors to al
 
 ## Design Considerations
 
-The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies and standards. Some of the efficiency comes from aggregate network traffic at scale and limited code footprint.
+The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies and standards. Some of the efficiency comes from aggregate network traffic at scale, limited code footprint, and the familiarity with concepts originating in specs like `HTML`, `HTML5`, etc.
 
-At a large scale shortening terms like `properties` to `props` in the protocol results in less network data transfer as well as fewer characters in source code, logs, etc.
+At a large scale shortening terms like `properties` to `props` in the protocol results in less network data transfer as well as fewer characters in source code, logs, etc., but human readability and other considerations were made for some of the property names that are not quite so terse.
 
 Casing of property names is also something that was taken into account. Properties like `currentTime` are in [`lower camel case`](https://en.wikipedia.org/wiki/Camel_case) since their origin is likely from a language or variable that is already in `lower camel case` such as HTML5 Media/Audio resulting in less "variable name/value translation overhead." For custom variables [`snake case`](https://en.wikipedia.org/wiki/Snake_case) may be more appropriate. The structure of the data payload for core scenarios is also minimally nested by design. The protocol uses existing platform agnostic standards like [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) formatted dates vs. ['Unix/Epoch Time`](https://en.wikipedia.org/wiki/Unix_time) when appropriate and property names and values like `playbackRate` mirror `HTML5 Audio/Media` properties.
 
- - [`JSON`](https://en.wikipedia.org/wiki/JSON) is the data interchange format utilized by the protocol (ideally without `whitespace` in `production`) as there is common support across numerous programming languages and environments
+ - [`JSON`](https://en.wikipedia.org/wiki/JSON) is the data interchange format utilized by the protocol (ideally without `whitespace` in `production`) as there is common support across numerous programming languages and environments. There are many reasons `JSON` was chosen as the  data serialization format over formats like [`XML`](https://en.wikipedia.org/wiki/XML) (one of these reasons is that in `XML` attributes natively only support simple values and do not support complex values or custom types).
  - `HTTP` headers are also leveraged due to their inherent support in web requests. Headers like [`X-Forwarded-For`](https://en.wikipedia.org/wiki/X-Forwarded-For) can be utilized in serverside requests to replace and/or append the `IP address` of the original requesting client instead of the server IP address.
 
 # Protocol Event Object Properties
