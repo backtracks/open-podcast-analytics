@@ -1,6 +1,6 @@
 # Open Podcast Analytics (OPA)
 
-The Open Podcast Analytics specification is a a unified spec for providing an open and common interface for sending podcast analytics related events. It is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps and clients like podcast discovery and listening software send data in the format in this specification.
+The Open Podcast Analytics specification is a a unified spec for providing an open and common interface for sending podcast analytics related events. OPA is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps and clients like podcast discovery and listening software send data in the format in this specification. Analytics providers with specific domain knowledge of audio and/or podcasting can provide insights that are not available with the data from a generic domain non-specific format.
 
 ## How does it work?
 
