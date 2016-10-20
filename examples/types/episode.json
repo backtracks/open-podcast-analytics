@@ -1,12 +1,6 @@
 // "Episode" must have the type property value of "episode"
 // The only required properties are number, label, and type.
-// "media_id" is an optional property with a value that
-// corresponds to the "media_id" type.
 {
-      "media_id": {
-            "id": "Episode 25 of Example Podcast",
-            "type": "guid"
-      },
       "label": "Episode 25",
       "number": 1,
       "type": "episode"

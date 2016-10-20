@@ -1,0 +1,13 @@
+// "Media Id" is a type that contains id based information
+// about a piece of media. Known values for the property
+// "type" (there may be other open-ended values) are:
+//    barcode
+//    uuid
+//    isbn
+//    isrc
+//    iswc
+//    org_uuid
+{
+  "id": "624fb990cdd94623b77f41fef0aa0e1d",
+  "type": "uuid"
+}
