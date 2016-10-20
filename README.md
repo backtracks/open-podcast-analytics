@@ -36,7 +36,7 @@ The simple protocol defines a common data interchange format and behaviors to al
             "type": "uuid",
          },
          {
-            "id": "Episode 123 of Example Podcast",
+            "id": "Episode 25 of Example Podcast",
             "type": "guid",
          }
       ],
