@@ -310,7 +310,7 @@ Samples events in their unencoded format are below:
 - *What should the maximum length be of a custom `string` property?*
  -  The maximum length for any string is 255 characters. While your requirements may be that the string is shorter (which it can be), the maximum length for data storage of that string in any implementing analytics system will be 255 characters.
 - *Are there any reserved characters in property names?*
- -  Yes, the characters that may not be used in property names are: `/`, `.`, and any character or complete phrase (e.g. `true` is not a valid property name) that is disallowed in a JavaScript property or variable name.
+ -  Yes, the characters that may not be used in property names are: `/`, `.`, and any character or complete phrase that is disallowed in a JavaScript property or variable name (e.g. `true` is not a valid property name).
 - *Are there any reserved property names?*
  -  Yes.
   - `time` shall always represent an `ISO 8601` compatible date/time format when used regardless of its location in a hierarchy.
