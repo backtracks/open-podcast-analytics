@@ -4,7 +4,7 @@ The Open Podcast Analytics specification is a a unified spec for providing an op
 
 ## How does it work?
 
-The simple protocol defines a common data interchange format and behaviors to allow a variety of mobile and desktop applications to emit/publish podcast analytics related events over the internet. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
+The simple protocol defines a common data interchange format and behaviors to allow a variety of mobile and desktop applications to emit/publish podcast analytics related events over the internet. Applications/clients may send one or more events in one call which enables queuing and batching. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
 
 ## Example Data
 ```json
@@ -20,10 +20,7 @@ The simple protocol defines a common data interchange format and behaviors to al
       "publisher_url": "http://example.com",
       "playbackRate":1,
       "volume":1,
-      "networkState":1,
-      "readyState":4,
       "muted":false,
-      "loop":false,
       "paused":false,
       "currentTime":0,
       "duration":3599.574513,
@@ -87,10 +84,7 @@ The simple protocol defines a common data interchange format and behaviors to al
         "publisher_url": "http://example.com",
         "playbackRate":1,
         "volume":1,
-        "networkState":1,
-        "readyState":4,
         "muted":false,
-        "loop":false,
         "paused":false,
         "currentTime":0,
         "duration":3599.574513
@@ -102,9 +96,7 @@ The simple protocol defines a common data interchange format and behaviors to al
 
 ## Design Considerations
 
-The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies and standards. Some of the efficiency comes from aggregate network traffic at scale, limited code footprint, and the familiarity with concepts originating in specs like `HTML`, `HTML5`, etc.
-
-At a large scale shortening terms like `properties` to `props` in the protocol results in less network data transfer as well as fewer characters in source code, logs, etc., but human readability and other considerations were made for some of the property names that are not quite so terse.
+The protocol/specification is designed to have the ability to be efficiently utilized in both clientside and serverside scenarios and leverage pervasive and known technologies and standards. Some of the efficiency comes from aggregate network traffic at scale, limited code footprint, and the familiarity with concepts originating in specs like `HTML`, `HTML5`, etc. The protocol/specification's ability to allow queuing and batching of events allows systems to react to a variety of scenarios including intermitten internet connections.
 
 Casing of property names is also something that was taken into account. Properties like `currentTime` are in [`lower camel case`](https://en.wikipedia.org/wiki/Camel_case) since their origin is likely from a language or variable that is already in `lower camel case` such as HTML5 Media/Audio resulting in less "variable name/value translation overhead." For custom variables [`snake case`](https://en.wikipedia.org/wiki/Snake_case) may be more appropriate. The structure of the data payload for core scenarios is also minimally nested by design. The protocol uses existing platform agnostic standards like [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) formatted dates vs. ['Unix/Epoch Time`](https://en.wikipedia.org/wiki/Unix_time) when appropriate and property names and values like `playbackRate` mirror `HTML5 Audio/Media` properties.
 
@@ -131,14 +123,14 @@ Second level properties are children of the property `props`. Custom properties 
 | currentTime | number/double | Yes | Current time of the client/user in media playback in seconds. | Yes |
 | duration | number/double | Yes | Length of in media in seconds. | Yes |
 | explicit | boolean | No | If true, the media contains explicit content. | Yes |
-| loop | boolean | Yes | Indication of if the media is set to loop on the end of playback. | Yes |
-| media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition | No |
+| loop | boolean | No | Indication of if the media is set to loop on the end of playback. | Yes |
+| media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition. | No |
 | muted | boolean | Yes | Indication of if the media is muted. For example the usual volume setting of the media may be at 1 (100%), however the client has the media muted. | Yes |
-| networkState | integer/short | Yes | An integer in the set of 0-3 that indicates the current network state. | Yes |
+| networkState | integer/short | No | An integer in the set of 0-3 that indicates the current [`network state`](https://dev.w3.org/html5/spec-preview/media-elements.html#network-states). | Yes |
 | paused | boolean | Yes | Indication of if the media is paused. | Yes |
-| playbackRate | number/double | Yes | A number like 1 or 1.5 that indicates the relative speed of playback of the media where 1 = normal speed and values above or below 1 indicate a speed/rate change. Zero (0) is not a valid value. | Yes |
+| playbackRate | number/double | Yes | A number like 1 or 1.5 that indicates the relative speed of playback of the media where 1 = normal speed and values above or below 1 indicate a speed/rate change in relation to the normal value of 1. Zero (0) is not a valid value. | Yes |
 | publisher | string(255) | No | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
-| readyState | integer/short | Yes | An integer in the set of 0-4 that indicates the current media readiness state for playback. | Yes |
+| readyState | integer/short | No | An integer in the set of 0-4 that indicates the current media [`readiness state`](https://dev.w3.org/html5/spec-preview/media-elements.html#ready-states) for playback. | Yes |
 | title | string(255) | No | Title of the media/work | No |
 | user_id | string(255) | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization. | No |
 | volume | number/double | Yes | A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media. Example: .75 = 75% volume | Yes |
@@ -181,7 +173,7 @@ Here is an example of what an event submission using the protocol represented in
 
 ### Actual Request
 ```http
-GET /?d=ICBbDQogICAgew0KICAgICAgIm5hbWUiOiJtZWRpYS5wbGF5IiwNCiAgICAgICJwcm9wcyI6ew0KICAgICAgICAgImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLA0KICAgICAgICAgInRpdGxlIjoiRXhhbXBsZSBUaXRsZSIsDQogICAgICAgICAicGxheWJhY2tSYXRlIjoxLA0KICAgICAgICAgInZvbHVtZSI6MSwNCiAgICAgICAgICJuZXR3b3JrU3RhdGUiOjEsDQogICAgICAgICAicmVhZHlTdGF0ZSI6NCwNCiAgICAgICAgICJtdXRlZCI6ZmFsc2UsDQogICAgICAgICAibG9vcCI6ZmFsc2UsDQogICAgICAgICAicGF1c2VkIjpmYWxzZSwNCiAgICAgICAgICJjdXJyZW50VGltZSI6Mi45OTc3MjksDQogICAgICAgICAiZHVyYXRpb24iOjM1OTkuNTc0NTEzLA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTEiOiAiQW55dGhpbmcgeW91IHdhbnQiLA0KICAgICAgICAgImN1c3RvbV9wcm9wZXJ0eTIiOiAzMy4zMywNCiAgICAgIH0sDQogICAgICAidGltZSI6IjIwMTYtMTAtMTZUMDA6MjM6MTMuNDExWiINCiAgICB9LA0KICAgIHsNCiAgICAgICJuYW1lIjoibWVkaWEudGltZXVwZGF0ZSIsDQogICAgICAicHJvcHMiOnsNCiAgICAgICAgICJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwNCiAgICAgICAgICJ0aXRsZSI6IkV4YW1wbGUgVGl0bGUiLA0KICAgICAgICAgInBsYXliYWNrUmF0ZSI6MSwNCiAgICAgICAgICJ2b2x1bWUiOjEsDQogICAgICAgICAibmV0d29ya1N0YXRlIjoxLA0KICAgICAgICAgInJlYWR5U3RhdGUiOjQsDQogICAgICAgICAibXV0ZWQiOmZhbHNlLA0KICAgICAgICAgImxvb3AiOmZhbHNlLA0KICAgICAgICAgInBhdXNlZCI6ZmFsc2UsDQogICAgICAgICAiY3VycmVudFRpbWUiOjMuMTU0NDM0LA0KICAgICAgICAgImR1cmF0aW9uIjozNTk5LjU3NDUxMw0KICAgICAgfSwNCiAgICAgICJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIg0KICAgIH0sDQogIF0= HTTP/1.1
+GET /?d=W3sibmFtZSI6Im1lZGlhLnBsYXkiLCJwcm9wcyI6eyJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm11dGVkIjpmYWxzZSwicGF1c2VkIjpmYWxzZSwiY3VycmVudFRpbWUiOjIuOTk3NzI5LCJkdXJhdGlvbiI6MzU5OS41NzQ1MTMsImN1c3RvbV9wcm9wZXJ0eTEiOiJBbnl0aGluZyB5b3Ugd2FudCIsImN1c3RvbV9wcm9wZXJ0eTIiOjMzLjMzfSwidGltZSI6IjIwMTYtMTAtMTZUMDA6MjM6MTMuNDExWiJ9LHsibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLCJwcm9wcyI6eyJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm5ldHdvcmtTdGF0ZSI6MSwicmVhZHlTdGF0ZSI6NCwibXV0ZWQiOmZhbHNlLCJwYXVzZWQiOmZhbHNlLCJjdXJyZW50VGltZSI6My4xNTQ0MzQsImR1cmF0aW9uIjozNTk5LjU3NDUxM30sInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoifSxd HTTP/1.1
 Host: example.com
 Connection: keep-alive
 User-Agent: Mozilla/5.0 (NeXTStep 3.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
@@ -198,10 +190,7 @@ Accept-Language: en-US,en;q=0.8
          "title":"Example Title",
          "playbackRate":1,
          "volume":1,
-         "networkState":1,
-         "readyState":4,
          "muted":false,
-         "loop":false,
          "paused":false,
          "currentTime":2.997729,
          "duration":3599.574513,
@@ -220,7 +209,6 @@ Accept-Language: en-US,en;q=0.8
          "networkState":1,
          "readyState":4,
          "muted":false,
-         "loop":false,
          "paused":false,
          "currentTime":3.154434,
          "duration":3599.574513
@@ -296,10 +284,7 @@ Samples events in their unencoded format are below:
          "title":"Example Title",
          "playbackRate":1,
          "volume":1,
-         "networkState":1,
-         "readyState":4,
          "muted":false,
-         "loop":false,
          "paused":false,
          "currentTime":2.997729,
          "duration":3599.574513
@@ -313,10 +298,7 @@ Samples events in their unencoded format are below:
          "title":"Example Title",
          "playbackRate":1,
          "volume":1,
-         "networkState":1,
-         "readyState":4,
          "muted":false,
-         "loop":false,
          "paused":false,
          "currentTime":3.154434,
          "duration":3599.574513

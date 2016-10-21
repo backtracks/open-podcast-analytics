@@ -8,10 +8,7 @@
       "publisher":"End Sounds",
       "playbackRate":0.50,
       "volume":1,
-      "networkState":1,
-      "readyState":4,
       "muted":false,
-      "loop":false,
       "paused":false,
       "currentTime":5.997729,
       "duration":159.00

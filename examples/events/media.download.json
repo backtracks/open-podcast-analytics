@@ -16,7 +16,6 @@
       "networkState":1,
       "readyState":4,
       "muted":false,
-      "loop":false,
       "paused":false,
       "currentTime":0,
       "duration":159.00,
