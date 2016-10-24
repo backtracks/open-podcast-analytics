@@ -1,0 +1,14 @@
+//  Campaigns are generally advertising centric ways of tracking ad campaign associations with
+//  audio.
+//    cs = Campaign Source [e.g. Email, Domains (google, google.com, etc.), however source is defined for the sending client/app/publisher]
+//    cm = Campaign Medium (e.g. referral, organic, cpc, email, social, broadcast, etc.)
+//    cn = Campaign Name
+//    cc = Campaign Content (signifier for the actually content)
+//    ck = Campaign Keyword(s) (keywords matched for the campaign)
+{
+  "cs": "email_promo_seasonal1",
+  "cm": "email",
+  "cn": "black_friday_sale",
+  "cc": "variation1",
+  "ck": "black%20%friday",
+}

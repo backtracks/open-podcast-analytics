@@ -1,0 +1,13 @@
+// Not all systems for audio analytics need to use this type.
+// Charge is a financial type.
+// It is a positive (purchase) or negative (refund, credit)
+// numeric amount, a three-letter ISO 4217 currency code
+// (https://en.wikipedia.org/wiki/ISO_4217), an optional name
+// and any other additional properties.
+// The minimum properties for a charge should be
+// amount and currency.
+{
+  "name": "Something",
+  "amount": 55.99,
+  "currency": "usd"
+}
