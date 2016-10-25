@@ -274,7 +274,7 @@ Samples events in their unencoded format are below:
 - *Is there a recommended querystring parameter to use for data in a `GET` request?*
   - Yes, it is recommended to use `d` as the querystring parameter due to brevity (`d` = `data`).
 - *How do I send multiple events in one request?*
-  - Multiple events should be represented as a `JSON` array where each event is a `JSON` object. Here is an unencoded representation of the data before it is `base64` encoded:
+  - Multiple events should be represented as a `JSON` array where each event is a `JSON` object. Here is an unencoded representation of data before it is `base64` encoded:
   ```json
   [
     {
@@ -307,13 +307,15 @@ Samples events in their unencoded format are below:
     },
   ]
   ```
+- *What happens if there is an error in sending multiple events in one request like a formatting error in one of the events?*
+  -  All of the events in the set are rejected/not accepted, a `400 series` HTTP status code is returned as the status code for the response.
 - *What should the maximum length be of a custom `string` property?*
  -  The maximum length for any string is 255 characters. While your requirements may be that the string is shorter (which it can be), the maximum length for data storage of that string in any implementing analytics system will be 255 characters.
 - *Are there any reserved characters in property names?*
  -  Yes, the characters that may not be used in property names are: `/`, `.`, and any character or complete phrase that is disallowed in a JavaScript property or variable name (e.g. `true` is not a valid property name).
 - *Are there any reserved property names?*
- -  Yes.
-  - `time` shall always represent an `ISO 8601` compatible date/time format when used regardless of its location in a hierarchy.
+  -  Yes.
+    - `time` shall always represent an `ISO 8601` compatible date/time format when used regardless of its location in a hierarchy.
 - *Should `GET` and `POST` requests both support receiving multiple events in one request?*
  -  Yes
 - *What should the `Content-Type` HTTP header be of `POST` requests in the protocol?*
