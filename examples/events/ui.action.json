@@ -42,6 +42,7 @@
          "paused":false,
          "currentTime":3.997729,
          "duration":159.00,
+         "screen": "Some Screen Name or Id",
          "element": {
             "id": "#important-button-or-element",
             "title": "Save"

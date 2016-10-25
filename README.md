@@ -140,7 +140,7 @@ Second level properties are children of the property `props`. Custom properties 
 | Property Name | Type | Required | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | id | string(255) | Yes | Unique id of the media |
-| type | string(255) | Yes | Type of media id, see `Known Media Id Types` below for known values. This is an open-ended property and not an restricted [`enum`](https://en.wikipedia.org/wiki/Enumerated_type) so the type value may be any valid string.  |
+| type | string(255) | Yes | Type of media id, see `Known Media Id Types` below for known values. This is an open-ended property and not a restricted [`enum`](https://en.wikipedia.org/wiki/Enumerated_type) so the type value may be any valid string.  |
 
 
 ### Known Media Id Types
@@ -308,7 +308,7 @@ Samples events in their unencoded format are below:
   ]
   ```
 - *What happens if there is an error in sending multiple events in one request like a formatting error in one of the events?*
-  -  All of the events in the set are rejected/not accepted and a `400 series` HTTP status code is returned as the status code for the response.
+  -  All of the events in the set are rejected/not accepted and a [`400 series`](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error) HTTP status code is returned as the status code for the response.
 - *What should the maximum length be of a custom `string` property?*
  -  The maximum length for any string is 255 characters. While your requirements may be that the string is shorter (which it can be), the maximum length for data storage of that string in any implementing analytics system will be 255 characters.
 - *Are there any reserved characters in property names?*
