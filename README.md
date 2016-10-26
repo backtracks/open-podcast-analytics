@@ -218,13 +218,13 @@ Accept-Language: en-US,en;q=0.8
   ]
 ```
 
-## Querystring Parameters
-The following querystring parameters shall be supported on both `GET` and `POST` requests. The `d` querystring parameter is ignored on `POST` requests since that content will be in the `body` of the request.
+## `GET` Querystring Parameters
+The following querystring parameters shall be supported for `GET` requests only. The `d` querystring parameter is ignored on `POST` requests since that content will be in the `body` of the request and the `callback` can only be used successfully on `GET` requests due to the limitations of [`JSONP`](https://en.wikipedia.org/wiki/JSONP).
 
-| Parameter Name | Type | Required | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| d | string | `GET` Only | `Base64` encoded (with padding) version of the data payload |
-| callback | string | No | JavaScript function name to call on the return of the request's response. When utilized the `Content-Type` of the response will be `application/javascript`. |
+| Parameter Name | Type | Required | Description | HTTP Methods Supported |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| d | string | `GET` Only | `Base64` encoded (with padding) version of the data payload | `GET`
+| callback | string | No | JavaScript function name to call on the return of the request's response. When utilized the `Content-Type` of the response will be `application/javascript`. | `GET`
 
 ### Examples
 #### Placeholders
