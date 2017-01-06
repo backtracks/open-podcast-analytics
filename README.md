@@ -136,8 +136,8 @@ Casing of property names is also something that was taken into account. Properti
 | nonce | string(255) | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
 | time | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
 
-## Second Level Properties
-Second level properties are children of the property `props`. Custom properties are allowed, however *all custom* properties shall be children or descendants of the `props` property similar to the known and expected properties. In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name.
+## Top Level Extended Properties
+In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name. Custom properties are allowed.
 
 | Property Name | Type | Required | Description | Mirrors HTML5 |
 | ------------- | ------------- | ------------- | ------------- | ------------- |

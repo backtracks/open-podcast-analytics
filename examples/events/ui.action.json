@@ -4,51 +4,47 @@
 [
    {
       "name":"ui.action",
-      "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "networkState":1,
-         "readyState":4,
-         "muted":false,
-         "loop":false,
-         "paused":false,
-         "currentTime":2.997729,
-         "duration":159.00,
-         "element": {
-            "id": "#just-an-id",
-            "class": ".links",
-            "href": "http://example.com",
-            "target": "_blank",
-            "rel": "external",
-            "title": "I'm a link!"
-         },
-         "intent": "click"
+      "author":"Jonathan Gill",
+      "title":"Example Title",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":2.997729,
+      "duration":159.00,
+      "element": {
+         "id": "#just-an-id",
+         "class": ".links",
+         "href": "http://example.com",
+         "target": "_blank",
+         "rel": "external",
+         "title": "I'm a link!"
       },
+      "intent": "click",
       "time":"2016-10-16T00:23:13.411Z"
     },
     {
       "name":"ui.action",
-      "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "networkState":1,
-         "readyState":4,
-         "muted":false,
-         "loop":false,
-         "paused":false,
-         "currentTime":3.997729,
-         "duration":159.00,
-         "screen": "Some Screen Name or Id",
-         "element": {
-            "id": "#important-button-or-element",
-            "title": "Save"
-         },
-         "intent": "tap"
+      "author":"Jonathan Gill",
+      "title":"Example Title",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "loop":false,
+      "paused":false,
+      "currentTime":3.997729,
+      "duration":159.00,
+      "screen": "Some Screen Name or Id",
+      "element": {
+         "id": "#important-button-or-element",
+         "title": "Save"
       },
+      "intent": "tap",
       "time":"2016-10-16T00:23:14.411Z"
-    },
+    }
 ]
