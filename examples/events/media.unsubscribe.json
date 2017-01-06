@@ -4,55 +4,53 @@
 // a podcast, however logically it is usually at the "series" level.
 {
    "name":"media.unsubscribe",
-   "props":{
-      "client":"Example App",
-      "client_version":"1.0.0",
-      "author":"Series Author or Series Title",
-      "title":"Episode Title",
-      "publisher": "Example Podcast Publisher",
-      "publisher_url": "http://example.com",
-      "playbackRate":1,
-      "volume":1,
-      "muted":false,
-      "paused":false,
-      "currentTime":0,
-      "duration":159.00,
-      "explicit":false,
-      "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
-      "src":"https://www.example.com/media/example.mp3",
-      "media_ids": [
-         {
-            "id": "624fb990cdd94623b77f41fef0aa0e1d",
-            "type": "uuid",
-         },
-         {
-            "id": "Episode 123 of Example Podcast",
-            "type": "guid",
-         }
-      ],
-      "categories": [
-         {
-            "label":"Society &amp; Culture",
-            "label_encoded":true,
-            "categories": [
-               {
-                  "label":"History"
-               }
-            ]
-         },
-         {
-            "label":"Music"
-         },
-      ],
-      "tags": [
-         "hot",
-         "new",
-         "usa"
-      ],
-      "series": {
-            "label":"Example Podcast",
-            "type":"series"
+   "client":"Example App",
+   "client_version":"1.0.0",
+   "author":"Series Author or Series Title",
+   "title":"Episode Title",
+   "publisher": "Example Podcast Publisher",
+   "publisher_url": "http://example.com",
+   "playbackRate":1,
+   "volume":1,
+   "muted":false,
+   "paused":false,
+   "currentTime":0,
+   "duration":159.00,
+   "explicit":false,
+   "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+   "src":"https://www.example.com/media/example.mp3",
+   "media_ids": [
+      {
+         "id": "624fb990cdd94623b77f41fef0aa0e1d",
+         "type": "uuid",
+      },
+      {
+         "id": "Episode 123 of Example Podcast",
+         "type": "guid",
       }
+   ],
+   "categories": [
+      {
+         "label":"Society &amp; Culture",
+         "label_encoded":true,
+         "categories": [
+            {
+               "label":"History"
+            }
+         ]
+      },
+      {
+         "label":"Music"
+      },
+   ],
+   "tags": [
+      "hot",
+      "new",
+      "usa"
+   ],
+   "series": {
+         "label":"Example Podcast",
+         "type":"series"
    },
    "time":"2016-10-16T00:23:13.411Z"
  }

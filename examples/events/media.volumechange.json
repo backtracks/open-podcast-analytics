@@ -4,17 +4,15 @@
 // unchanged.
 {
    "name":"media.volumechange",
-   "props":{
-      "client":"Example App",
-      "author":"The Mag Seven",
-      "title":"Trim",
-      "publisher":"End Sounds",
-      "playbackRate":1,
-      "volume":0.75,
-      "muted":false,
-      "paused":false,
-      "currentTime":5.997729,
-      "duration":159.00
-   },
+   "client":"Example App",
+   "author":"The Mag Seven",
+   "title":"Trim",
+   "publisher":"End Sounds",
+   "playbackRate":1,
+   "volume":0.75,
+   "muted":false,
+   "paused":false,
+   "currentTime":5.997729,
+   "duration":159.00,
    "time":"2016-10-16T00:23:13.411Z"
  }

@@ -1,6 +1,6 @@
 # Open Podcast Analytics (OPA)
 
-The Open Podcast Analytics specification is a a unified spec for providing an open and common interface for sending podcast analytics related events. OPA is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps and clients like podcast discovery and listening software send data in the format in this specification. Analytics providers with specific domain knowledge of audio and/or podcasting can provide insights that are not available with the data from a generic domain non-specific format.
+The Open Podcast Analytics specification is a a unified spec for providing an open and common interface for sending podcast analytics related events. OPA is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps, clients (e.g. podcast discovery and listening software), and serverside media hosting software transmit data in the format in this specification. Analytics providers with specific domain knowledge of audio and/or podcasting can provide insights that are not available with the data from a generic domain non-specific format.
 
 ## How does it work?
 
@@ -10,8 +10,69 @@ The simple protocol defines a common data interchange format and behaviors to al
 ```json
 [
   {
-   "name":"media.download",
-   "props":{
+    "name":"media.download",
+    "client":"Example App",
+    "client_version":"1.0.0",
+    "author":"Series Author or Series Title",
+    "title":"Episode Title",
+    "publisher": "Example Podcast Publisher",
+    "publisher_url": "http://example.com",
+    "playbackRate":1,
+    "volume":1,
+    "muted":false,
+    "paused":false,
+    "currentTime":0,
+    "duration":3599.574513,
+    "explicit":false,
+    "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+    "src":"https://www.example.com/media/example.mp3",
+    "media_ids": [
+       {
+          "id": "624fb990cdd94623b77f41fef0aa0e1d",
+          "type": "uuid",
+       },
+       {
+          "id": "Episode 25 of Example Podcast",
+          "type": "guid",
+       }
+    ],
+    "categories": [
+       {
+          "label":"Society &amp; Culture",
+          "label_encoded":true,
+          "categories": [
+             {
+                "label":"History"
+             }
+          ]
+       },
+       {
+          "label":"Music"
+       },
+    ],
+    "tags": [
+       "hot",
+       "new",
+       "usa"
+    ],
+    "series": {
+          "label": "Example Podcast",
+          "type": "series"
+    },
+    "season": {
+          "label": "Season 1",
+          "number": 1,
+          "type": "season"
+    },
+    "episode": {
+          "label": "Episode 25",
+          "number": 25,
+          "type": "episode"
+    },
+    "time":"2016-10-16T00:23:13.411Z"
+  },
+  {
+      "name":"media.play",
       "client":"Example App",
       "client_version":"1.0.0",
       "author":"Series Author or Series Title",
@@ -23,72 +84,36 @@ The simple protocol defines a common data interchange format and behaviors to al
       "muted":false,
       "paused":false,
       "currentTime":0,
-      "duration":3599.574513,
-      "explicit":false,
       "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
-      "src":"https://www.example.com/media/example.mp3",
-      "media_ids": [
-         {
-            "id": "624fb990cdd94623b77f41fef0aa0e1d",
-            "type": "uuid",
-         },
-         {
-            "id": "Episode 25 of Example Podcast",
-            "type": "guid",
-         }
-      ],
-      "categories": [
-         {
-            "label":"Society &amp; Culture",
-            "label_encoded":true,
-            "categories": [
-               {
-                  "label":"History"
-               }
-            ]
-         },
-         {
-            "label":"Music"
-         },
-      ],
-      "tags": [
-         "hot",
-         "new",
-         "usa"
-      ],
-      "series": {
-            "label": "Example Podcast",
-            "type": "series"
-      },
-      "season": {
-            "label": "Season 1",
-            "number": 1,
-            "type": "season"
-      },
-      "episode": {
-            "label": "Episode 25",
-            "number": 25,
-            "type": "episode"
-      }
-   },
+      "duration":3599.574513,
+      "time":"2016-10-16T00:23:13.411Z"
+   }
+]
+```
+
+## Example Data (Using Payload Reduction / Memo Feature)
+```json
+[
+  {
+    "name":"media.download",
+    "playbackRate":1,
+    "volume":1,
+    "muted":false,
+    "paused":false,
+    "currentTime":0,
+    "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+    "memo": "abcd12",
     "time":"2016-10-16T00:23:13.411Z"
   },
   {
       "name":"media.play",
-      "props":{
-        "client":"Example App",
-        "client_version":"1.0.0",
-        "author":"Series Author or Series Title",
-        "title":"Episode Title",
-        "publisher": "Example Podcast Publisher",
-        "publisher_url": "http://example.com",
-        "playbackRate":1,
-        "volume":1,
-        "muted":false,
-        "paused":false,
-        "currentTime":0,
-        "duration":3599.574513
-      },
+      "playbackRate":1,
+      "volume":1,
+      "muted":false,
+      "paused":false,
+      "currentTime":0,
+      "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+      "memo": "efgh33",
       "time":"2016-10-16T00:23:13.411Z"
    }
 ]
@@ -109,9 +134,7 @@ Casing of property names is also something that was taken into account. Properti
 | ------------- | ------------- | ------------- | ------------- |
 | name | string(255) | Yes | Name of the event and generally takes the form of `major_topic.sub_topic` |
 | nonce | string(255) | No | Check value on uniqueness of an event. When specified the value shall be an arbitrary `string` and functions as as a [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce). The property is also useful in retry scenarios. |
-| props | object | Yes | A `dictionary` of arbitrary `key-value pairs` of data where the values may be simple values (e.g. strings, integers, doubles/decimals/floats) or other nested `JSON` objects |
 | time | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
-| id | string(255) | No | An `access key`, `public API key`, `project key`, `id`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. |
 
 ## Second Level Properties
 Second level properties are children of the property `props`. Custom properties are allowed, however *all custom* properties shall be children or descendants of the `props` property similar to the known and expected properties. In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name.
@@ -164,16 +187,16 @@ Second level properties are children of the property `props`. Custom properties 
 
 When sending a HTTP request, standard HTTP headers such as [`User-Agent`](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields) should be included. `User-Agent` shall also be populated for requests originating from with mobile applications.
 
-When sending a HTTP `GET` request, populate the querystring parameter `d` with the `base64` encoded data. When sending a HTTP `POST ` request, populate the `body` of the request with the `base64` encoded data and set the `Content-Type` header of the HTTP request to ``application/x-www-form-urlencoded`.
+When sending a HTTP `GET` request, populate the querystring parameter `d` with the `base64` encoded data. When sending a HTTP `POST ` request, populate the `body` of the request with key-value pairs of parmeters where the `d` parameter is the `Base 64` encoded data and set the `Content-Type` header of the HTTP request to ``application/x-www-form-urlencoded`. When data is sent using a HTTP `POST` with the `Content-Type` of `application/json` the data (e.g. value of the `d` parameter) shall not be `Base 64` encoded and will be in the `clear`.
 
-If/when receiving a HTTP response, typical [`HTTP status codes`](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) apply where a static code in the 200 range indicates success and 400 and 500 series status codes indicate a failure.
+If/when receiving a HTTP response, typical [`HTTP status codes`](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) apply where a status code in the 200 range indicates success and 400 and 500 series status code indicates a failure.
 
 ## Example Event Submission
 Here is an example of what an event submission using the protocol represented in HTTP request headers.
 
-### Actual Request
+### Actual Requests
 ```http
-GET /?d=W3sibmFtZSI6Im1lZGlhLnBsYXkiLCJwcm9wcyI6eyJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm11dGVkIjpmYWxzZSwicGF1c2VkIjpmYWxzZSwiY3VycmVudFRpbWUiOjIuOTk3NzI5LCJkdXJhdGlvbiI6MzU5OS41NzQ1MTMsImN1c3RvbV9wcm9wZXJ0eTEiOiJBbnl0aGluZyB5b3Ugd2FudCIsImN1c3RvbV9wcm9wZXJ0eTIiOjMzLjMzfSwidGltZSI6IjIwMTYtMTAtMTZUMDA6MjM6MTMuNDExWiJ9LHsibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLCJwcm9wcyI6eyJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm5ldHdvcmtTdGF0ZSI6MSwicmVhZHlTdGF0ZSI6NCwibXV0ZWQiOmZhbHNlLCJwYXVzZWQiOmZhbHNlLCJjdXJyZW50VGltZSI6My4xNTQ0MzQsImR1cmF0aW9uIjozNTk5LjU3NDUxM30sInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoifSxd HTTP/1.1
+GET /?d=W3sibmFtZSI6Im1lZGlhLnBsYXkiLCJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm11dGVkIjpmYWxzZSwicGF1c2VkIjpmYWxzZSwiY3VycmVudFRpbWUiOjIuOTk3NzI5LCJkdXJhdGlvbiI6MzU5OS41NzQ1MTMsImN1c3RvbV9wcm9wZXJ0eTEiOiJBbnl0aGluZyB5b3Ugd2FudCIsImN1c3RvbV9wcm9wZXJ0eTIiOjMzLjMzLCJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIn0seyJuYW1lIjoibWVkaWEudGltZXVwZGF0ZSIsImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLCJ0aXRsZSI6IkV4YW1wbGUgVGl0bGUiLCJwbGF5YmFja1JhdGUiOjEsInZvbHVtZSI6MSwibmV0d29ya1N0YXRlIjoxLCJyZWFkeVN0YXRlIjo0LCJtdXRlZCI6ZmFsc2UsInBhdXNlZCI6ZmFsc2UsImN1cnJlbnRUaW1lIjozLjE1NDQzNCwiZHVyYXRpb24iOjM1OTkuNTc0NTEzLCJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIn1d HTTP/1.1
 Host: example.com
 Connection: keep-alive
 User-Agent: Mozilla/5.0 (NeXTStep 3.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
@@ -185,56 +208,64 @@ Accept-Language: en-US,en;q=0.8
   [
     {
       "name":"media.play",
-      "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "muted":false,
-         "paused":false,
-         "currentTime":2.997729,
-         "duration":3599.574513,
-         "custom_property1": "Anything you want",
-         "custom_property2": 33.33
-      },
+      "author":"Jonathan Gill",
+      "title":"Example Title",
+      "playbackRate":1,
+      "volume":1,
+      "muted":false,
+      "paused":false,
+      "currentTime":2.997729,
+      "duration":3599.574513,
+      "custom_property1": "Anything you want",
+      "custom_property2": 33.33,
       "time":"2016-10-16T00:23:13.411Z"
     },
     {
       "name":"media.timeupdate",
-      "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "networkState":1,
-         "readyState":4,
-         "muted":false,
-         "paused":false,
-         "currentTime":3.154434,
-         "duration":3599.574513
-      },
+      "author":"Jonathan Gill",
+      "title":"Example Title",
+      "playbackRate":1,
+      "volume":1,
+      "networkState":1,
+      "readyState":4,
+      "muted":false,
+      "paused":false,
+      "currentTime":3.154434,
+      "duration":3599.574513,
       "time":"2016-10-16T00:23:13.411Z"
     },
   ]
 ```
+```http
+POST / HTTP/1.1
+Host: demo.backtracks.io
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (NeXTStep 3.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept-Language: en-US,en;q=0.8
 
-## `GET` Querystring Parameters
-The following querystring parameters shall be supported for `GET` requests only. The `d` querystring parameter is ignored on `POST` requests since that content will be in the `body` of the request and the `callback` can only be used successfully on `GET` requests due to the limitations of [`JSONP`](https://en.wikipedia.org/wiki/JSONP).
+d=W3sibmFtZSI6Im1lZGlhLnBsYXkiLCJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm11dGVkIjpmYWxzZSwicGF1c2VkIjpmYWxzZSwiY3VycmVudFRpbWUiOjIuOTk3NzI5LCJkdXJhdGlvbiI6MzU5OS41NzQ1MTMsImN1c3RvbV9wcm9wZXJ0eTEiOiJBbnl0aGluZyB5b3Ugd2FudCIsImN1c3RvbV9wcm9wZXJ0eTIiOjMzLjMzLCJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIn0seyJuYW1lIjoibWVkaWEudGltZXVwZGF0ZSIsImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLCJ0aXRsZSI6IkV4YW1wbGUgVGl0bGUiLCJwbGF5YmFja1JhdGUiOjEsInZvbHVtZSI6MSwibmV0d29ya1N0YXRlIjoxLCJyZWFkeVN0YXRlIjo0LCJtdXRlZCI6ZmFsc2UsInBhdXNlZCI6ZmFsc2UsImN1cnJlbnRUaW1lIjozLjE1NDQzNCwiZHVyYXRpb24iOjM1OTkuNTc0NTEzLCJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIn1d
+```
+
+
+## Parameters
+The following parameters shall be supported. The paremter `callback` can only be used successfully on `GET` requests due to the limitations of [`JSONP`](https://en.wikipedia.org/wiki/JSONP).
 
 | Parameter Name | Type | Required | Description | HTTP Methods Supported |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| d | string | `GET` Only | `Base64` encoded (with padding) version of the data payload | `GET`
-| callback | string | No | JavaScript function name to call on the return of the request's response. When utilized the `Content-Type` of the response will be `application/javascript`. | `GET`
+| callback | string | No | JavaScript function name to call on the return of the request's response. When utilized the `Content-Type` of the response will be `application/javascript`. This follows [`JSONP`](https://en.wikipedia.org/wiki/JSONP) conventions.  | `GET`
+| d | string | `GET` Only | `Base64` encoded (with padding) version of the data payload | `GET`, `POST`
+| k | string(255) | No | An `access key`, `public API key`, `project key`, `id`, etc. that may be utilized by analytics providers to know how to route the data being passed. This field may also serve as a method of authentication in particular scenarios. | `GET`, `POST`
 
 ### Examples
 #### Placeholders
 ```
-https://example.com/?d=<data>&callback=<callback>
+https://example.com/?k=<key>&d=<data>&callback=<callback>
 ```
 
 #### Subsituted
 ```
-https://example.com/?d=W3sibmFtZSI6Im1lZGlhLnBsYXkiLCJwcm9wcyI6eyJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm11dGVkIjpmYWxzZSwicGF1c2VkIjpmYWxzZSwiY3VycmVudFRpbWUiOjIuOTk3NzI5LCJkdXJhdGlvbiI6MzU5OS41NzQ1MTMsImN1c3RvbV9wcm9wZXJ0eTEiOiJBbnl0aGluZyB5b3Ugd2FudCIsImN1c3RvbV9wcm9wZXJ0eTIiOjMzLjMzfSwidGltZSI6IjIwMTYtMTAtMTZUMDA6MjM6MTMuNDExWiJ9LHsibmFtZSI6Im1lZGlhLnRpbWV1cGRhdGUiLCJwcm9wcyI6eyJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm5ldHdvcmtTdGF0ZSI6MSwicmVhZHlTdGF0ZSI6NCwibXV0ZWQiOmZhbHNlLCJwYXVzZWQiOmZhbHNlLCJjdXJyZW50VGltZSI6My4xNTQ0MzQsImR1cmF0aW9uIjozNTk5LjU3NDUxM30sInRpbWUiOiIyMDE2LTEwLTE2VDAwOjIzOjEzLjQxMVoifSxd&callback=customJavaScriptFunction
+https://example.com/?k=abc123&d=W3sibmFtZSI6Im1lZGlhLnBsYXkiLCJhdXRob3IiOiJKb25hdGhhbiBHaWxsIiwidGl0bGUiOiJFeGFtcGxlIFRpdGxlIiwicGxheWJhY2tSYXRlIjoxLCJ2b2x1bWUiOjEsIm11dGVkIjpmYWxzZSwicGF1c2VkIjpmYWxzZSwiY3VycmVudFRpbWUiOjIuOTk3NzI5LCJkdXJhdGlvbiI6MzU5OS41NzQ1MTMsImN1c3RvbV9wcm9wZXJ0eTEiOiJBbnl0aGluZyB5b3Ugd2FudCIsImN1c3RvbV9wcm9wZXJ0eTIiOjMzLjMzLCJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIn0seyJuYW1lIjoibWVkaWEudGltZXVwZGF0ZSIsImF1dGhvciI6IkpvbmF0aGFuIEdpbGwiLCJ0aXRsZSI6IkV4YW1wbGUgVGl0bGUiLCJwbGF5YmFja1JhdGUiOjEsInZvbHVtZSI6MSwibmV0d29ya1N0YXRlIjoxLCJyZWFkeVN0YXRlIjo0LCJtdXRlZCI6ZmFsc2UsInBhdXNlZCI6ZmFsc2UsImN1cnJlbnRUaW1lIjozLjE1NDQzNCwiZHVyYXRpb24iOjM1OTkuNTc0NTEzLCJ0aW1lIjoiMjAxNi0xMC0xNlQwMDoyMzoxMy40MTFaIn1d&callback=customJavaScriptFunction
 ```
 
 ### Event Examples
@@ -243,7 +274,7 @@ Samples events in their unencoded format are below:
 | Event Name |
 | ------------- |
 | [media.play](/examples/events/media.play.json) (Basic/Sample) |
-| [media.play](/examples/events/media.play.extended.json) (Actual/Detailed) |
+| [media.play](/examples/events/media.play.extended.json) (Detailed/Extended) |
 | [media.pause](/examples/events/media.pause.json) |
 | [media.download](/examples/events/media.download.json) |
 | [media.subscribe](/examples/events/media.subscribe.json) |
@@ -260,57 +291,53 @@ Samples events in their unencoded format are below:
 - *In a serverside request, how do I specify the IP address of the user and not the IP address of the server?*
   - Create or append to the [`X-Forwarded-For`](https://en.wikipedia.org/wiki/X-Forwarded-For) header (append if it already exists) in the request that is sent the analytics service.
 - *How can I add custom properties to events?*
-  - Add any custom properties as descendants of the `props` property. The use of descendants and not children is to indicate that nested structures can be supported.
+  - Add any custom properties as children or descendants of their parent. For example, if you want to add a property called `foo`, it can be a peer of `name`, `title`, etc. or you could create or add to an existing container property (e.g. adding `foo` to a property named `props`). The use of descendants and not children is to indicate that nested structures can be supported.
 - *Why is the data sent via the protocol [`Base 64`](https://en.wikipedia.org/wiki/Base64) encoded?*
   - While it may seem that `JSON` is primarily a string based data interchange format, the payload of data (which is essentially a structured string) is converted to bytes (e.g. an array of bytes) then `base64` encoded with multiple purposes in mind.
     - All strings regardless of text encoding can be converted to byte arrays and all bytes can be encoded as `base64`
     - [`UTF-8`](https://en.wikipedia.org/wiki/UTF-8) strings, such as 音频, can be encoded in `base64` if converted to bytes first, which opens up the protocol for use with values from different languages.
     - Encoding potential querystring parameter values as `base64` eliminates the need to also [`url encode`](https://en.wikipedia.org/wiki/Percent-encoding) or escape the value(s)
     - A light amount of obfuscation of the data
-- *How do I know `base64` encode data?*
+- *How do I `base64` encode data?*
   - Most modern programming languages have built-in support for `base64` encoding and for languages and environments like `JavaScript/Node`, there are open source modules and libraries that can perform the `base64` encoding and decoding.
 - *How do I know if my `base64` encoded data is padded correctly?*
   - The [`mod`](https://en.wikipedia.org/wiki/Modulo_operation) 4 of a base64 encoded string should be 0 and if the result is not 0 then there's some missing padding in the encoding algorithm. This may seem crazy, but often this just means your encoding algorithm just needs to add equal signs `=` at the end of the string until the `mod 4` of the encoded string equals 0.
 - *Is there a recommended querystring parameter to use for data in a `GET` request?*
   - Yes, it is recommended to use `d` as the querystring parameter due to brevity (`d` = `data`).
 - *How do I send multiple events in one request?*
-  - Multiple events should be represented as a `JSON` array where each event is a `JSON` object. Here is an unencoded representation of data before it is `base64` encoded:
+  - Multiple events should be represented as a `JSON` array where each event is a `JSON` object. Here is an unencoded representation of data:
   ```json
   [
     {
       "name":"media.play",
-      "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "muted":false,
-         "paused":false,
-         "currentTime":2.997729,
-         "duration":3599.574513
-      },
+      "author":"Jonathan Gill",
+      "title":"Example Title",
+      "playbackRate":1,
+      "volume":1,
+      "muted":false,
+      "paused":false,
+      "currentTime":2.997729,
+      "duration":3599.574513,
       "time":"2016-10-16T00:23:13.411Z"
     },
     {
       "name":"media.timeupdate",
-      "props":{
-         "author":"Jonathan Gill",
-         "title":"Example Title",
-         "playbackRate":1,
-         "volume":1,
-         "muted":false,
-         "paused":false,
-         "currentTime":3.154434,
-         "duration":3599.574513
-      },
+      "author":"Jonathan Gill",
+      "title":"Example Title",
+      "playbackRate":1,
+      "volume":1,
+      "muted":false,
+      "paused":false,
+      "currentTime":3.154434,
+      "duration":3599.574513,
       "time":"2016-10-16T00:23:13.411Z"
-    },
+    }
   ]
   ```
 - *What happens if there is an error in sending multiple events in one request like a formatting error in one of the events?*
   -  All of the events in the set are rejected/not accepted and a [`400 series`](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error) HTTP status code is returned as the status code for the response.
 - *What should the maximum length be of a custom `string` property?*
- -  The maximum length for any string is 255 characters. While your requirements may be that the string is shorter (which it can be), the maximum length for data storage of that string in any implementing analytics system will be 255 characters.
+ -  The maximum length for any string property is 255 characters. While your requirements may be that the string is shorter (which it can be), the maximum length for data storage of that string in any implementing analytics system will be 255 characters.
 - *Are there any reserved characters in property names?*
  -  Yes, the characters that may not be used in property names are: `/`, `.`, and any character or complete phrase that is disallowed in a JavaScript property or variable name (e.g. `true` is not a valid property name).
 - *Are there any reserved property names?*
@@ -319,7 +346,9 @@ Samples events in their unencoded format are below:
 - *Should `GET` and `POST` requests both support receiving multiple events in one request?*
  -  Yes
 - *What should the `Content-Type` HTTP header be of `POST` requests in the protocol?*
-  - The `Content-Type` of a `POST` request shall be `application/x-www-form-urlencoded`.
+  - The `Content-Type` of a `POST` request shall be `application/x-www-form-urlencoded` (the `d` parameter is `Base 64` encoded) or `application/json` (the `d` key-value pair is NOT `Base 64` encoded).
+- *How do I save on data transmission and payload size?*
+  - [`OPA`](https://github.com/backtracks/open-podcast-analytics) analyics providers support functionality called `memo` where an alias/token that represents a larger dataset is sent instead of the full payload. The analytics provider(s) know what the value of a specific `memo` is and will merge and subsitute the full data on submission. With this `memo` support, data transmission payloads are smaller and can be richer.
 - *Is whitespace important?*
   - We recommend that `JSON` not have whitespace outside of the whitespace within a string value in production usage. Whitespace outside of this use is not significant in this protocol and simply increases the data payload size.
 - *Why do you use the term `uuid` instead of `guid`?*

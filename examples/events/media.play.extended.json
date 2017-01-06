@@ -10,90 +10,88 @@
 // data.
 {
    "name":"media.play",
-   "props":{
-      "client":"Example App",
-      "client_version":"1.0.0",
-      "author":"The Mag Seven",
-      "title":"Trim",
-      "publisher": "End Sounds",
-      "publisher_url": "http://endsounds.com",
-      "playbackRate":1,
-      "volume":1,
-      "muted":false,
-      "paused":false,
-      "currentTime":2.997729,
-      "duration":159.00,
-      "explicit":false,
-      "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
-      "src":"https://www.example.com/media/example.mp3",
-      "played":[
-         {
-            "start": 0,
-            "end": 1.12345
-         },
-         {
-            "start": 2.1345,
-            "end": 2.997729
-         }
-      ],
-      "bufferred":[
-         {
-            "start": 0,
-            "end": 35
-         }
-      ],
-      "media_ids": [
-         {
-            "id": "859403001219",
-            "type": "barcode",
-         },
-         {
-            "id": "USAEA0910027",
-            "type": "isrc",
-         },
-         {
-            "id": "END1021",
-            "type": "org_uuid",
-         },
-         {
-            "id": "624fb990cdd94623b77f41fef0aa0e1d",
-            "type": "uuid",
-         }
-      ],
-      "categories": [
-         {
-            "label":"Society &amp; Culture",
-            "label_encoded":true,
-            "categories": [
-               {
-                  "label":"History"
-               }
-            ]
-         },
-         {
-            "label":"Music"
-         },
-      ],
-      "tags": [
-         "hot",
-         "new",
-         "usa"
-      ],
-      "series": {
-            "label": "Example Podcast",
-            "type": "series"
+   "client":"Example App",
+   "client_version":"1.0.0",
+   "author":"The Mag Seven",
+   "title":"Trim",
+   "publisher": "End Sounds",
+   "publisher_url": "http://endsounds.com",
+   "playbackRate":1,
+   "volume":1,
+   "muted":false,
+   "paused":false,
+   "currentTime":2.997729,
+   "duration":159.00,
+   "explicit":false,
+   "user_id":"4300f781-0044-4d69-a8cc-4b0be0fcad0f",
+   "src":"https://www.example.com/media/example.mp3",
+   "played":[
+      {
+         "start": 0,
+         "end": 1.12345
       },
-      "season": {
-            "label": "Season 1",
-            "number": 1,
-            "type": "season"
-      },
-      "episode": {
-            "label": "Episode 25",
-            "number": 25,
-            "type": "episode"
+      {
+         "start": 2.1345,
+         "end": 2.997729
       }
+   ],
+   "bufferred":[
+      {
+         "start": 0,
+         "end": 35
+      }
+   ],
+   "media_ids": [
+      {
+         "id": "859403001219",
+         "type": "barcode",
+      },
+      {
+         "id": "USAEA0910027",
+         "type": "isrc",
+      },
+      {
+         "id": "END1021",
+         "type": "org_uuid",
+      },
+      {
+         "id": "624fb990cdd94623b77f41fef0aa0e1d",
+         "type": "uuid",
+      }
+   ],
+   "categories": [
+      {
+         "label":"Society &amp; Culture",
+         "label_encoded":true,
+         "categories": [
+            {
+               "label":"History"
+            }
+         ]
+      },
+      {
+         "label":"Music"
+      },
+   ],
+   "tags": [
+      "hot",
+      "new",
+      "usa"
+   ],
+   "series": {
+         "label": "Example Podcast",
+         "type": "series"
    },
-   "id": "abc12345678910",
+   "season": {
+         "label": "Season 1",
+         "number": 1,
+         "type": "season"
+   },
+   "episode": {
+         "label": "Episode 25",
+         "number": 25,
+         "type": "episode"
+   },
+   "key": "abc12345678910",
    "time":"2016-10-16T00:23:13.411Z"
  }

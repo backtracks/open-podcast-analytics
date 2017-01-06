@@ -2,17 +2,15 @@
 // event example in "media.play.extended.json" is recommended for actual apps/clients.
 {
    "name":"media.play",
-   "props":{
-      "client":"Example App",
-      "author":"The Mag Seven",
-      "title":"Trim",
-      "publisher":"End Sounds",
-      "playbackRate":1,
-      "volume":1,
-      "muted":false,
-      "paused":false,
-      "currentTime":2.997729,
-      "duration":159.00
-   },
+   "client":"Example App",
+   "author":"The Mag Seven",
+   "title":"Trim",
+   "publisher":"End Sounds",
+   "playbackRate":1,
+   "volume":1,
+   "muted":false,
+   "paused":false,
+   "currentTime":2.997729,
+   "duration":159.00,
    "time":"2016-10-16T00:23:13.411Z"
  }
