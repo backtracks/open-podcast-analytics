@@ -139,24 +139,25 @@ Casing of property names is also something that was taken into account. Properti
 ## Top Level Extended Properties
 In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name. Custom properties are allowed.
 
-| Property Name | Type | Required | Description | Mirrors HTML5 |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-| author | string(255) | No | Name of the author or artist of the media/work | No |
-| client | string(255) | No | Unique identifier or name of the client or media player performing the action related to the request | No |
-| currentTime | number/double | Yes | Current time of the client/user in media playback in seconds. | Yes |
-| duration | number/double | Yes | Length of in media in seconds. | Yes |
-| explicit | boolean | No | If true, the media contains explicit content. | Yes |
-| loop | boolean | No | Indication of if the media is set to loop on the end of playback. | Yes |
-| media_ids | array(`Media Id Type`) | No | Array of `Media Id Type`. See `Media Id Type` for a type definition. | No |
-| muted | boolean | Yes | Indication of if the media is muted. For example the usual volume setting of the media may be at 1 (100%), however the client has the media muted. | Yes |
-| networkState | integer/short | No | An integer in the set of 0-3 that indicates the current [`network state`](https://dev.w3.org/html5/spec-preview/media-elements.html#network-states). | Yes |
-| paused | boolean | Yes | Indication of if the media is paused. | Yes |
-| playbackRate | number/double | Yes | A number like 1 or 1.5 that indicates the relative speed of playback of the media where 1 = normal speed and values above or below 1 indicate a speed/rate change in relation to the normal value of 1. Zero (0) is not a valid value. | Yes |
-| publisher | string(255) | No | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
-| readyState | integer/short | No | An integer in the set of 0-4 that indicates the current media [`readiness state`](https://dev.w3.org/html5/spec-preview/media-elements.html#ready-states) for playback. | Yes |
-| title | string(255) | No | Title of the media/work | No |
-| user_id | string(255) | No | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization. | No |
-| volume | number/double | Yes | A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media. Example: .75 = 75% volume | Yes |
+| Property Name | Type | Required | Default (If Omitted) | Description | Mirrors HTML5 |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| author | string(255) | No | N/A | Name of the author or artist of the media/work | No |
+| client | string(255) | No | N/A | Unique identifier or name of the client or media player performing the action related to the request | No |
+| currentTime | number/double | Yes | | Current time of the client/user in media playback in seconds. | Yes |
+| duration | number/double | Yes | | Length of in media in seconds. | Yes |
+| explicit | boolean | No | False | If true, the media contains explicit content. | Yes |
+| loop | boolean | No | False | Indication of if the media is set to loop on the end of playback. | Yes |
+| media_ids | array(`Media Id Type`) | No | | Array of `Media Id Type`. See `Media Id Type` for a type definition. | No |
+| muted | boolean | Yes | False | Indication of if the media is muted. For example the usual volume setting of the media may be at 1 (100%), however the client has the media muted. | Yes |
+| networkState | integer/short | No | | An integer in the set of 0-3 that indicates the current [`network state`](https://dev.w3.org/html5/spec-preview/media-elements.html#network-states). | Yes |
+| paused | boolean | No | False | Indication of if the media is paused. | Yes |
+| playbackRate | number/double | No | 1 | A number like 1 or 1.5 that indicates the relative speed of playback of the media where 1 = normal speed and values above or below 1 indicate a speed/rate change in relation to the normal value of 1. Zero (0) is not a valid value. | Yes |
+| publisher | string(255) | No | | Name of the publisher of the media/work related to the request (this may be different than the author) | No |
+| readyState | integer/short | No | | An integer in the set of 0-4 that indicates the current media [`readiness state`](https://dev.w3.org/html5/spec-preview/media-elements.html#ready-states) for playback. | Yes |
+| src | string(255) | No | | URL of the media | Yes |
+| title | string(255) | No | `src` | Title of the media/work | No |
+| user_id | string(255) | No | | Unique identifier for the user performing the action related to the request. This identifier is typically unique to an application or organization. | No |
+| volume | number/double | No | 1 | A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media. Example: .75 = 75% volume | Yes |
 
 
 ### Media Id Type
