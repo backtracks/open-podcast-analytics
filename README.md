@@ -137,7 +137,7 @@ Casing of property names is also something that was taken into account. Properti
 | time | date/string | Yes | An [`ISO 8601`](https://en.wikipedia.org/wiki/ISO_8601) compatible date/time stamp in UTC of the time the event occurred |
 
 ## Top Level Extended Properties
-In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name. Custom properties are allowed.
+In the table below the `Mirrors HTML5` column indicates if the property name and value mirrors an HTML5 Media and/or Web Audio API property of the same name. Custom properties are allowed. Some properties have a default value if they are omitted and/or not applicable in particular event scenario (this can also reduce payload size as the property does not need to be included in the payload if the `default` value should be utilized).
 
 | Property Name | Type | Required | Default (If Omitted) | Description | Mirrors HTML5 |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
