@@ -2,6 +2,12 @@
 
 The Open Podcast Analytics specification is a a unified spec for providing an open and common interface for sending podcast analytics related events. OPA is based on the [`Open Audio Analytics`](https://github.com/backtracks/open-audio-analytics) specification with extensions specifically for podcasting analytics. Apps, clients (e.g. podcast discovery and listening software), and serverside media hosting software transmit data in the format in this specification. Analytics providers with specific domain knowledge of audio and/or podcasting can provide insights that are not available with the data from a generic domain non-specific format.
 
+<p align="center">
+<img src="https://cloud.githubusercontent.com/assets/3399813/23593139/9c58f88e-01d0-11e7-8115-f904bd8814cc.png" alt="Open Podcast Analytics (OPA) - Logo" title="Open Podcast Analytics (OPA)">
+</p>
+
+
+
 ## How does it work?
 
 The simple protocol defines a common data interchange format and behaviors to allow a variety of mobile and desktop applications to emit/publish podcast analytics related events over the internet. Applications/clients may send one or more events in one call which enables queuing and batching. The data sent in the protocol is not sensitive data (it is still recommended to send data over a `HTTPS` connection), yet is a sufficient amount of data for analytics services conforming/consuming to the protocol to provide analytics services based on that data.
