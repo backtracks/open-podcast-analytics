@@ -1,0 +1,156 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://backtracks.fm/schemas/opa-v1.json",
+    "definitions": {
+      "mediaId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique id of the media",
+            "type": "string",
+            "maxLength": 255
+          },
+          "type": {
+            "description": "Type of media id",
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      }
+    },
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the event",
+          "type": "string",
+          "maxLength": 255
+        },
+        "time": {
+          "description": "An ISO 8601 compatible date/time stamp in UTC of the time the event occurred",
+          "type": "string",
+          "format": "date-time"
+        },
+        "nonce": {
+          "description": "Check value on uniqueness of an event",
+          "type": "string",
+          "maxLength": 255
+        },
+        "k": {
+          "description": "An access key, public API key, project key, id, etc.",
+          "type": "string",
+          "maxLength": 255
+        },
+        "author": {
+          "description": "Name of the author or artist of the media",
+          "type": "string",
+          "maxLength": 255
+        },
+        "client": {
+          "description": "Unique identifier or name of the client or media player",
+          "type": "string",
+          "maxLength": 255
+        },
+        "currentTime": {
+          "description": "Current time of the client/user in media playback in seconds",
+          "type": "number"
+        },
+        "duration": {
+          "description": "Length of in media in seconds",
+          "type": "number"
+        },
+        "explicit": {
+          "description": "If true, the media contains explicit content",
+          "type": "boolean"
+        },
+        "loop": {
+          "description": "Indication of if the media is set to loop on the end of playback",
+          "type": "boolean"
+        },
+        "media_ids": {
+          "description": "Array of mediaId objects",
+          "type": "array",
+          "items": {
+            "description": "A mediaId object",
+            "type": "object",
+            "$ref": "#/definitions/mediaId"
+          }
+        },
+        "muted": {
+          "description": "Indication of if the media is muted",
+          "type": "boolean"
+        },
+        "networkState": {
+          "description": "An integer in the set of 0-3 that indicates the current network state",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "paused": {
+          "description": "Indication of if the media is paused",
+          "type": "boolean"
+        },
+        "playbackRate": {
+          "description": "A number like 1 or 1.5 that indicates the relative speed of playback of the media",
+          "type": "number"
+        },
+        "publisher": {
+          "description": "Name of the publisher of the media",
+          "type": "string",
+          "maxLength": 255
+        },
+        "readyState": {
+          "description": "An integer in the set of 0-4 that indicates the current media readiness state for playback",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "src": {
+          "description": "URL of the media",
+          "type": "string",
+          "maxLength": 255,
+          "format": "uri"
+        },
+        "title": {
+          "description": "Title of the media",
+          "type": "string",
+          "maxLength": 255
+        },
+        "user_id": {
+          "description": "Unique identifier for the user performing the action",
+          "type": "string",
+          "maxLength": 255
+        },
+        "volume": {
+          "description": "A number between 0 and 1 (where 0 = 0% and 1 = 100%) that indicates the volume setting of the media",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "name",
+        "time",
+        "currentTime",
+        "duration",
+        "muted"
+      ],
+      "minItems": 1
+    }
+  }
+}
