@@ -32,7 +32,7 @@
 {
   "name": "Riverboat Gamblers Radio",
   "description": "Radio station based on music similar to Riverboat Gamblers",
-  "recipie": [
+  "recipe": [
     {
       "artist": "Riverboat Gamblers",
       "proportion": 1,
